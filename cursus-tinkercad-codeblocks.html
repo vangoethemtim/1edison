@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Praktische basiscursus Tinkercad Codeblocks voor leerlingen van het eerste middelbaar.">
+  <title>Tinkercad Codeblocks — programmeren in 3D</title>
+  <style>
+    :root {
+      --primary: #1565c0;
+      --primary-dark: #0d47a1;
+      --primary-soft: #e8f1fb;
+      --accent: #ffb300;
+      --ink: #17212b;
+      --muted: #5f6b76;
+      --line: #d9e0e7;
+      --surface: #ffffff;
+      --background: #f4f7fa;
+      --success: #18794e;
+      --success-soft: #e8f7ef;
+      --warning: #9a5b00;
+      --warning-soft: #fff5dc;
+      --danger: #b42318;
+      --danger-soft: #ffebe9;
+      --purple: #7e57c2;
+      --purple-soft: #f1ecfb;
+      --shape: #4caf50;
+      --modify: #8e5bc2;
+      --control: #f59e0b;
+      --math: #0ea5a8;
+      --data: #2563eb;
+      --markup: #64748b;
+      --shadow: 0 4px 18px rgba(23, 33, 43, .09);
+      --radius: 14px;
+      --nav-width: 270px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--background);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.58;
+    }
+
+    button, input { font: inherit; }
+    a { color: var(--primary); }
+    code, kbd, pre { font-family: "Cascadia Code", Consolas, monospace; }
+    code {
+      padding: .08rem .32rem;
+      border-radius: 5px;
+      color: #0b4d86;
+      background: #edf3f8;
+    }
+    kbd {
+      display: inline-block;
+      min-width: 1.8em;
+      margin: 0 .08em;
+      padding: .08em .42em;
+      border: 1px solid #aeb8c2;
+      border-bottom-width: 3px;
+      border-radius: 5px;
+      color: #253341;
+      background: #fff;
+      font-size: .9em;
+      text-align: center;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: -60px;
+      left: 16px;
+      padding: 10px 14px;
+      color: #fff;
+      background: var(--primary-dark);
+      border-radius: 0 0 8px 8px;
+    }
+    .skip-link:focus { top: 0; }
+
+    .sidebar {
+      position: fixed;
+      z-index: 20;
+      inset: 0 auto 0 0;
+      width: var(--nav-width);
+      padding: 24px 18px;
+      overflow-y: auto;
+      color: #fff;
+      background: linear-gradient(175deg, #0d47a1 0%, #12324f 100%);
+    }
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .brand-mark {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      border-radius: 12px;
+      color: var(--primary-dark);
+      background: #fff;
+      font-weight: 900;
+      font-size: 1.35rem;
+    }
+    .brand strong, .brand small { display: block; }
+    .brand small { color: #cfe1f5; }
+    .sidebar nav a {
+      display: block;
+      margin: 3px 0;
+      padding: 9px 11px;
+      border-radius: 8px;
+      color: #e5f0fc;
+      text-decoration: none;
+      font-size: .94rem;
+    }
+    .sidebar nav a:hover,
+    .sidebar nav a:focus {
+      color: #fff;
+      background: rgba(255, 255, 255, .12);
+      outline: none;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+      color: #d7e8f8;
+      font-size: .82rem;
+    }
+    .progress-track {
+      height: 7px;
+      margin-top: 6px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .18);
+    }
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: var(--accent);
+      transition: width .25s ease;
+    }
+
+    main {
+      width: min(1100px, calc(100% - var(--nav-width)));
+      margin-left: var(--nav-width);
+      padding: 32px clamp(20px, 4vw, 62px) 80px;
+    }
+    .hero {
+      position: relative;
+      min-height: 390px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 26px;
+      padding: clamp(32px, 6vw, 72px);
+      overflow: hidden;
+      border-radius: 22px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(255, 179, 0, .95) 0 7%, transparent 7.3%),
+        radial-gradient(circle at 93% 63%, rgba(255, 255, 255, .12) 0 18%, transparent 18.3%),
+        linear-gradient(135deg, #1565c0, #0d3d70 72%);
+      box-shadow: var(--shadow);
+    }
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #dcecff;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.35rem, 6vw, 4.7rem);
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+    .hero p:not(.eyebrow) {
+      max-width: 700px;
+      margin: 20px 0 0;
+      color: #e7f1fb;
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .button {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      min-height: 42px;
+      padding: 9px 15px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button:hover { filter: brightness(.95); }
+    .button.light { color: var(--primary-dark); background: #fff; }
+    .button.ghost { border: 1px solid rgba(255,255,255,.45); background: transparent; }
+
+    .lesson {
+      margin: 26px 0;
+      padding: clamp(22px, 4vw, 42px);
+      scroll-margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 2px 10px rgba(23, 33, 43, .055);
+    }
+    .lesson-number {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 10px 0 8px;
+      font-size: clamp(1.65rem, 3vw, 2.3rem);
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+    h3 { margin: 30px 0 8px; font-size: 1.25rem; }
+    h4 { margin: 20px 0 5px; font-size: 1rem; }
+    p { margin: .55rem 0 1rem; }
+    .lead { max-width: 820px; color: var(--muted); font-size: 1.08rem; }
+
+    .goal-grid, .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .mini-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcfd;
+    }
+    .mini-card strong { display: block; margin-bottom: 3px; }
+    .mini-card p { margin: 0; color: var(--muted); }
+
+    .note, .warning, .danger, .success {
+      margin: 18px 0;
+      padding: 14px 16px;
+      border-left: 5px solid var(--primary);
+      border-radius: 8px;
+      background: var(--primary-soft);
+    }
+    .warning { border-color: var(--accent); background: var(--warning-soft); }
+    .danger { border-color: var(--danger); background: var(--danger-soft); }
+    .success { border-color: var(--success); background: var(--success-soft); }
+    .note strong, .warning strong, .danger strong, .success strong { display: block; }
+
+    .table-wrap { margin: 18px 0; overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .95rem;
+    }
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th { color: #334251; background: #f1f5f8; }
+    tr:last-child td { border-bottom: 0; }
+
+    .steps {
+      margin: 16px 0;
+      padding: 0;
+      counter-reset: steps;
+      list-style: none;
+    }
+    .steps li {
+      position: relative;
+      min-height: 42px;
+      margin: 10px 0;
+      padding-left: 50px;
+      counter-increment: steps;
+    }
+    .steps li::before {
+      position: absolute;
+      top: -2px;
+      left: 0;
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--primary);
+      font-weight: 800;
+      content: counter(steps);
+    }
+
+    .task {
+      margin: 22px 0;
+      padding: 19px;
+      border: 2px solid #bad0e5;
+      border-radius: 12px;
+      background: #f8fbfe;
+    }
+    .task-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .task-icon {
+      display: grid;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 10px;
+      color: #fff;
+      background: var(--primary);
+      font-weight: 900;
+    }
+    .task h3, .task h4 { margin-top: 2px; }
+    .task ul { margin-bottom: 0; }
+    .done-row {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--success);
+      font-weight: 700;
+    }
+    .done-row input { width: 19px; height: 19px; accent-color: var(--success); }
+
+    details {
+      margin: 14px 0;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+    summary {
+      padding: 13px 15px;
+      color: var(--primary-dark);
+      font-weight: 750;
+      cursor: pointer;
+    }
+    details > div { padding: 0 15px 15px; }
+    details.teacher { border-left: 5px solid #7b1fa2; }
+    details.teacher summary { color: #6a1b9a; }
+
+    .checklist { padding-left: 0; list-style: none; }
+    .checklist li { margin: 8px 0; padding-left: 28px; }
+    .checklist li::before {
+      float: left;
+      margin-left: -28px;
+      color: var(--success);
+      font-weight: 900;
+      content: "✓";
+    }
+
+    .block-stack {
+      display: grid;
+      gap: 7px;
+      max-width: 620px;
+      margin: 18px auto;
+      padding: 18px;
+      border: 2px dashed #bdd0e0;
+      border-radius: 14px;
+      background: #f9fbfd;
+    }
+    .block {
+      width: fit-content;
+      max-width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px 8px 8px 3px;
+      color: #fff;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-weight: 800;
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,.12);
+    }
+    .block.shape { background: var(--shape); }
+    .block.modify { background: var(--modify); }
+    .block.control { background: var(--control); }
+    .block.math { background: var(--math); }
+    .block.data { background: var(--data); }
+    .block.markup { background: var(--markup); }
+    .indent { margin-left: 28px; }
+
+    .axis-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 18px 0;
+    }
+    .axis {
+      padding: 18px;
+      border-radius: 12px;
+      background: #f7f9fb;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .axis b {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 7px;
+    }
+    .axis.x b { color: #d32f2f; }
+    .axis.y b { color: #2e7d32; }
+    .axis.z b { color: #1565c0; }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 18px 0;
+      font-weight: 750;
+    }
+    .flow span {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .flow b { color: var(--primary); font-size: 1.2rem; }
+
+    .formula {
+      margin: 18px 0;
+      padding: 18px;
+      border-radius: 12px;
+      background: var(--purple-soft);
+      color: #4a2d78;
+      font-size: 1.08rem;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .quiz label {
+      display: block;
+      margin: 7px 0;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      cursor: pointer;
+    }
+    .quiz label:hover { background: #f4f8fb; }
+    .quiz input { margin-right: 8px; accent-color: var(--primary); }
+    .quiz-result { min-height: 1.4em; margin-top: 12px; font-weight: 800; }
+
+    .footer {
+      padding: 28px 8px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: .88rem;
+    }
+
+    @media (max-width: 880px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        max-height: none;
+        padding: 15px 18px;
+      }
+      .sidebar nav {
+        display: flex;
+        gap: 3px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+      }
+      .sidebar nav a { flex: 0 0 auto; white-space: nowrap; }
+      .brand { margin-bottom: 8px; }
+      .progress-label, .progress-track { display: none; }
+      main { width: 100%; margin: 0; padding: 18px 14px 60px; }
+      .hero { min-height: 350px; border-radius: 14px; }
+    }
+
+    @media (max-width: 600px) {
+      .goal-grid, .card-grid, .axis-box { grid-template-columns: 1fr; }
+      .lesson { padding: 22px 17px; }
+      th, td { padding: 9px; }
+      .block { font-size: .88rem; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 15mm; }
+      body { color: #000; background: #fff; font-size: 10.5pt; }
+      .sidebar, .hero-actions, .done-row, .quiz button, .footer { display: none !important; }
+      main { width: 100%; margin: 0; padding: 0; }
+      .hero { min-height: 0; margin: 0 0 10mm; padding: 14mm; color: #fff; box-shadow: none; }
+      .lesson { margin: 0 0 9mm; padding: 0; border: 0; box-shadow: none; break-before: page; }
+      .lesson:first-of-type { break-before: auto; }
+      .task, .note, .warning, .danger, .success, .block-stack, table, details, .axis-box { break-inside: avoid; }
+      details > div { display: block; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhoud">Ga naar de cursus</a>
+
+  <aside class="sidebar" aria-label="Cursusnavigatie">
+    <div class="brand">
+      <div class="brand-mark">{ }</div>
+      <div><strong>Tinkercad Codeblocks</strong><small>1e middelbaar</small></div>
+    </div>
+    <nav>
+      <a href="#start">Start</a>
+      <a href="#les1">1. Denken in blokken</a>
+      <a href="#les2">2. Bewegen in 3D</a>
+      <a href="#les3">3. Herhalen</a>
+      <a href="#les4">4. Patronen maken</a>
+      <a href="#les5">5. Variabelen</a>
+      <a href="#eindopdracht">Eindopdracht</a>
+      <a href="#spiekbrief">Spiekbrief</a>
+    </nav>
+    <div class="progress-label"><span>Mijn oefeningen</span><strong id="progressText">0/0</strong></div>
+    <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+  </aside>
+
+  <main id="inhoud">
+    <header class="hero" id="start">
+      <p class="eyebrow">Programmeren + 3D ontwerpen</p>
+      <h1>Laat code vormen bouwen.</h1>
+      <p>Je sleept programmeerblokken in de juiste volgorde en Tinkercad bouwt daarmee een 3D-model. Je leert niet alleen tekenen, maar ook denken als een programmeur.</p>
+      <div class="hero-actions">
+        <a class="button light" href="#les1">Start de cursus</a>
+        <button class="button ghost" type="button" onclick="window.print()">Afdrukken / pdf</button>
+      </div>
+    </header>
+
+    <section class="lesson" aria-labelledby="route-title">
+      <span class="lesson-number">Overzicht</span>
+      <h2 id="route-title">Wat moet je na deze cursus kunnen?</h2>
+      <div class="goal-grid">
+        <div class="mini-card"><strong>Blokken lezen</strong><p>Uitleggen wat een reeks codeblokken van boven naar beneden doet.</p></div>
+        <div class="mini-card"><strong>3D begrijpen</strong><p>Een vorm verplaatsen over de X-, Y- en Z-as en draaien of schalen.</p></div>
+        <div class="mini-card"><strong>Slim herhalen</strong><p>Met een <code>Repeat</code>-blok patronen maken zonder dezelfde code telkens opnieuw te bouwen.</p></div>
+        <div class="mini-card"><strong>Met waarden werken</strong><p>Een eenvoudige variabele gebruiken om een ontwerp makkelijk aanpasbaar te maken.</p></div>
+      </div>
+
+      <h3>Vier programmeerideeën die overal terugkomen</h3>
+      <div class="card-grid">
+        <div class="mini-card"><strong>1. Volgorde</strong><p>De computer voert instructies in een bepaalde volgorde uit.</p></div>
+        <div class="mini-card"><strong>2. Parameters</strong><p>Getallen bepalen bijvoorbeeld grootte, afstand, hoek of aantal.</p></div>
+        <div class="mini-card"><strong>3. Herhaling</strong><p>Een lus voert dezelfde instructies meerdere keren uit.</p></div>
+        <div class="mini-card"><strong>4. Variabelen</strong><p>Een naam bewaart een waarde die je later opnieuw kunt gebruiken of veranderen.</p></div>
+      </div>
+
+      <div class="note">
+        <strong>Belangrijk</strong>
+        In deze cursus gebruiken we de Engelse namen uit Tinkercad, zoals <code>Shapes</code>, <code>Modify</code>, <code>Repeat</code>, <code>Move</code> en <code>Rotate</code>.
+      </div>
+
+      <details class="teacher">
+        <summary>Docentfiche: voorgestelde timing</summary>
+        <div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Lesuur</th><th>Inhoud</th><th>Resultaat</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Interface, volgorde en vormen</td><td>Een eenvoudig object uit meerdere vormen.</td></tr>
+                <tr><td>2</td><td>X, Y, Z; Move, Rotate en Scale</td><td>Een klein 3D-figuur correct positioneren.</td></tr>
+                <tr><td>3</td><td>Repeat en patronen in een rij</td><td>Een herhaald patroon met weinig code.</td></tr>
+                <tr><td>4</td><td>Rotatie rond een middelpunt</td><td>Een cirkel- of sterpatroon.</td></tr>
+                <tr><td>5</td><td>Variabele + eindopdracht</td><td>Een eigen code-gegenereerd ontwerp.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="lesson" id="les1" aria-labelledby="les1-title">
+      <span class="lesson-number">Les 1</span>
+      <h2 id="les1-title">Denken in blokken</h2>
+      <p class="lead">Een programma is een reeks duidelijke instructies. In Codeblocks schrijf je die instructies niet met tekst: je klikt programmeerblokken aan elkaar.</p>
+
+      <h3>De werkruimte</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Onderdeel</th><th>Wat doe je ermee?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Blocks panel</strong></td><td>Hier vind je de blokken per categorie.</td></tr>
+            <tr><td><strong>Blocks editor</strong></td><td>Hier bouw je je programma door blokken aan elkaar te klikken.</td></tr>
+            <tr><td><strong>3D viewer</strong></td><td>Hier zie je het model dat door je code wordt gemaakt.</td></tr>
+            <tr><td><strong>Play</strong></td><td>Voert je programma uit en bouwt het resultaat opnieuw.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>De belangrijkste categorieën</h3>
+      <div class="block-stack" aria-label="Voorbeelden van Codeblocks-categorieën">
+        <div class="block shape">Shapes → Add Box / Add Cylinder / Add Sphere</div>
+        <div class="block modify">Modify → Move / Rotate / Scale / Create Group</div>
+        <div class="block control">Control → Repeat ... times</div>
+        <div class="block math">Math → getallen en berekeningen</div>
+        <div class="block data">Data → waarden van variabelen gebruiken</div>
+        <div class="block markup">Mark Up → commentaar bij je code</div>
+      </div>
+
+      <h3>Volgorde is belangrijk</h3>
+      <div class="flow">
+        <span>Add Box</span><b>→</b><span>Move</span><b>→</b><span>Rotate</span>
+      </div>
+      <p>Eerst bestaat de vorm, daarna kan ze verplaatst of gedraaid worden. Je programma wordt dus stap voor stap opgebouwd.</p>
+
+      <div class="note">
+        <strong>Waarom staat een nieuwe vorm soms half onder het werkvlak?</strong>
+        Een nieuwe vorm start rond het punt <code>X=0, Y=0, Z=0</code>. Het middelpunt van de vorm ligt daar. Een kubus van 20 mm hoog moet daarom bijvoorbeeld <code>10 mm</code> omhoog om volledig boven het werkvlak te staan.
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">1A</div><div><h3>Praktijk: je eerste Codeblock</h3><p>Maak een blok en laat het op het werkvlak staan.</p></div></div>
+        <ol class="steps">
+          <li>Open Tinkercad en maak een nieuw <strong>Codeblocks</strong>-ontwerp.</li>
+          <li>Sleep <strong>Add Box</strong> uit <strong>Shapes</strong> naar je code.</li>
+          <li>Geef de box een hoogte van <strong>20 mm</strong>.</li>
+          <li>Voeg <strong>Move</strong> toe en zet <strong>Z = 10</strong>.</li>
+          <li>Druk op <strong>Play</strong> en bekijk het resultaat vanuit verschillende hoeken.</li>
+        </ol>
+        <div class="block-stack">
+          <div class="block shape">Add Box · height 20</div>
+          <div class="block modify">Move · X 0 · Y 0 · Z 10</div>
+        </div>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="1a"> Opdracht 1A voltooid</label>
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">1B</div><div><h3>Praktijk: robotkop</h3><p>Combineer verschillende vormen.</p></div></div>
+        <ol>
+          <li>Gebruik een box als hoofd.</li>
+          <li>Voeg twee kleine spheres toe als ogen.</li>
+          <li>Gebruik <code>Move</code> om de ogen vooraan en op de juiste hoogte te zetten.</li>
+          <li>Kies zelf de kleuren.</li>
+          <li>Voeg met <strong>Mark Up</strong> een korte commentaar toe: <em>Dit is mijn robotkop.</em></li>
+        </ol>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="1b"> Opdracht 1B voltooid</label>
+      </div>
+
+      <details>
+        <summary>Controle: wat is een parameter?</summary>
+        <div>Een instelbare waarde van een blok. Bij een box zijn breedte, lengte en hoogte voorbeelden van parameters. Bij <code>Move</code> zijn X, Y en Z parameters.</div>
+      </details>
+    </section>
+
+    <section class="lesson" id="les2" aria-labelledby="les2-title">
+      <span class="lesson-number">Les 2</span>
+      <h2 id="les2-title">Bewegen in drie dimensies</h2>
+      <p class="lead">In 3D heb je drie richtingen. Tinkercad gebruikt daarvoor een coördinatenstelsel met X, Y en Z.</p>
+
+      <div class="axis-box">
+        <div class="axis x"><b>X</b>links ↔ rechts</div>
+        <div class="axis y"><b>Y</b>voor ↔ achter</div>
+        <div class="axis z"><b>Z</b>omlaag ↕ omhoog</div>
+      </div>
+
+      <h3>Drie belangrijke bewerkingen</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Blok</th><th>Betekenis</th><th>Denk aan…</th></tr></thead>
+          <tbody>
+            <tr><td><code>Move</code></td><td>Verplaatst een vorm.</td><td>Een pion verschuiven.</td></tr>
+            <tr><td><code>Rotate</code></td><td>Draait een vorm rond een as.</td><td>Een deur die draait.</td></tr>
+            <tr><td><code>Scale</code></td><td>Maakt een vorm groter of kleiner.</td><td>In- of uitzoomen op het voorwerp zelf.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warning">
+        <strong>Move en Scale zijn niet hetzelfde</strong>
+        <code>Move X 10</code> verandert de plaats. <code>Scale X 10</code> verandert de afmeting. Lees dus altijd eerst het blok dat je gebruikt.
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">2A</div><div><h3>Praktijk: maak een wegwijzer</h3><p>Oefen Move, Rotate en Scale in één ontwerp.</p></div></div>
+        <ol>
+          <li>Maak een smalle box als paal.</li>
+          <li>Maak een tweede box als bord.</li>
+          <li>Zet het bord bovenaan met <code>Move Z</code>.</li>
+          <li>Draai het bord <strong>30° rond de Z-as</strong>.</li>
+          <li>Maak het bord langer met <code>Scale</code>.</li>
+        </ol>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="2a"> Opdracht 2A voltooid</label>
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">2B</div><div><h3>Onderzoek: voorspel eerst</h3><p>Niet meteen op Play drukken.</p></div></div>
+        <p>Bouw onderstaande code, maar voorspel vóór het uitvoeren waar de kubus ongeveer zal staan.</p>
+        <div class="block-stack">
+          <div class="block shape">Add Box · 20 × 20 × 20</div>
+          <div class="block modify">Move · X 30 · Y -10 · Z 10</div>
+          <div class="block modify">Rotate around Z · 45°</div>
+        </div>
+        <p>Druk daarna op <strong>Play</strong>. Was je voorspelling juist? Verander telkens maar één getal en kijk wat er verandert.</p>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="2b"> Opdracht 2B voltooid</label>
+      </div>
+
+      <details>
+        <summary>Controle: waarom veranderen we best één waarde tegelijk?</summary>
+        <div>Dan weet je welke wijziging het verschil in je resultaat veroorzaakte. Dat is dezelfde aanpak die programmeurs gebruiken bij testen en fouten zoeken.</div>
+      </details>
+    </section>
+
+    <section class="lesson" id="les3" aria-labelledby="les3-title">
+      <span class="lesson-number">Les 3</span>
+      <h2 id="les3-title">Laat de computer herhalen</h2>
+      <p class="lead">Computers zijn goed in herhaling. Een <code>Repeat</code>-blok is een lus: de blokken erin worden meerdere keren uitgevoerd.</p>
+
+      <div class="formula">10 dezelfde vormen bouwen = liever 1 stukje code dat 10× herhaalt dan 10 keer dezelfde blokken kopiëren.</div>
+
+      <h3>Een lus lezen</h3>
+      <div class="block-stack">
+        <div class="block control">Repeat 6 times</div>
+        <div class="block shape indent">Add Box</div>
+        <div class="block modify indent">Move · X 12</div>
+      </div>
+      <p>De blokken die <em>in</em> de lus zitten horen bij de herhaling. Inspringen helpt je zien welke opdrachten samen horen.</p>
+
+      <div class="note">
+        <strong>Programmeerwoord: iteratie</strong>
+        Eén keer door de lus gaan heet één <em>iteratie</em>. Een lus die 6 keer loopt heeft dus 6 iteraties.
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">3A</div><div><h3>Praktijk: maak een hek</h3><p>Gebruik herhaling in plaats van kopiëren.</p></div></div>
+        <ol>
+          <li>Start met <code>Create New Object</code>.</li>
+          <li>Plaats een <code>Repeat</code>-blok en laat het <strong>8 keer</strong> uitvoeren.</li>
+          <li>Voeg in de lus een smalle box toe als paaltje.</li>
+          <li>Voeg een <code>Move</code>-blok toe zodat elk volgend paaltje opschuift.</li>
+          <li>Druk op <strong>Play</strong> en pas de afstand aan tot je een duidelijk patroon ziet.</li>
+        </ol>
+        <p><strong>Uitdaging:</strong> verander alleen het aantal herhalingen. Wat verandert? Verander daarna alleen de afstand.</p>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="3a"> Opdracht 3A voltooid</label>
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">3B</div><div><h3>Praktijk: code inkorten</h3><p>Herken herhaling.</p></div></div>
+        <p>Je ziet in een ontwerp zes keer dezelfde combinatie <code>Add Cylinder → Move</code>. Bouw dezelfde logica opnieuw met één <code>Repeat</code>-blok.</p>
+        <p>Leg in één zin uit waarom jouw nieuwe versie makkelijker aan te passen is.</p>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="3b"> Opdracht 3B voltooid</label>
+      </div>
+
+      <details>
+        <summary>Controle: waarom zie je soms maar één vorm terwijl je toch herhaalt?</summary>
+        <div>Meerdere vormen kunnen exact op dezelfde plaats terechtkomen. De lus werkt dan wel, maar de vormen liggen boven op elkaar. Voeg een verplaatsing of rotatie toe zodat elke herhaling op een andere plaats komt.</div>
+      </details>
+    </section>
+
+    <section class="lesson" id="les4" aria-labelledby="les4-title">
+      <span class="lesson-number">Les 4</span>
+      <h2 id="les4-title">Patronen met draaien</h2>
+      <p class="lead">Een rechte rij is één soort patroon. Door een vorm te verplaatsen en daarna telkens rond de Z-as te draaien, kun je een cirkel, bloem of ster maken.</p>
+
+      <h3>Een volledige cirkel is 360°</h3>
+      <div class="formula">hoek per stap = 360° ÷ aantal vormen</div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aantal vormen</th><th>Hoek per stap</th></tr></thead>
+          <tbody>
+            <tr><td>4</td><td>90°</td></tr>
+            <tr><td>6</td><td>60°</td></tr>
+            <tr><td>8</td><td>45°</td></tr>
+            <tr><td>12</td><td>30°</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">4A</div><div><h3>Praktijk: maak een bloem</h3><p>Combineer Move, Rotate en Repeat.</p></div></div>
+        <ol>
+          <li>Kies een vorm: bijvoorbeeld een sphere, torus of cylinder.</li>
+          <li>Verplaats de vorm eerst weg van het middelpunt.</li>
+          <li>Gebruik een lus met <strong>8 herhalingen</strong>.</li>
+          <li>Draai bij elke herhaling <strong>45° rond de Z-as</strong> rond het middelpunt.</li>
+          <li>Voer uit en pas afstand, vorm en grootte aan.</li>
+        </ol>
+        <div class="formula">8 × 45° = 360° → precies één volledige ronde</div>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="4a"> Opdracht 4A voltooid</label>
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">4B</div><div><h3>Onderzoek: breek de cirkel</h3><p>Maak bewust een ander patroon.</p></div></div>
+        <ol>
+          <li>Gebruik nog steeds 8 herhalingen.</li>
+          <li>Verander 45° naar 30°.</li>
+          <li>Voer uit en beschrijf wat er gebeurt.</li>
+          <li>Probeer daarna 60°.</li>
+          <li>Zoek zelf één combinatie die je mooi vindt.</li>
+        </ol>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="4b"> Opdracht 4B voltooid</label>
+      </div>
+
+      <div class="success">
+        <strong>Je bent nu generatief aan het ontwerpen</strong>
+        Je beschrijft niet elk afzonderlijk onderdeel. Je maakt regels die samen een ontwerp genereren.
+      </div>
+    </section>
+
+    <section class="lesson" id="les5" aria-labelledby="les5-title">
+      <span class="lesson-number">Les 5</span>
+      <h2 id="les5-title">Variabelen: geef een getal een naam</h2>
+      <p class="lead">Een variabele is een naam waar een waarde in zit. Dat maakt code leesbaarder en vooral makkelijker aanpasbaar.</p>
+
+      <div class="formula"><code>afstand = 15</code> betekent: onthoud het getal 15 onder de naam <code>afstand</code>.</div>
+
+      <h3>Waarom is dat handig?</h3>
+      <p>Stel dat je dezelfde afstand vijf keer gebruikt. Zonder variabele moet je vijf getallen aanpassen. Met een variabele verander je één waarde.</p>
+
+      <div class="block-stack">
+        <div class="block math">Create Variable · afstand = 15</div>
+        <div class="block shape">Add Box</div>
+        <div class="block modify">Move · X = afstand</div>
+      </div>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">5A</div><div><h3>Praktijk: regelbare afstand</h3><p>Maak één waarde belangrijk voor je hele ontwerp.</p></div></div>
+        <ol>
+          <li>Maak een variabele met de naam <code>afstand</code>.</li>
+          <li>Geef ze eerst de waarde <strong>10</strong>.</li>
+          <li>Gebruik die waarde in een <code>Move</code>-blok van een herhaald patroon.</li>
+          <li>Voer het ontwerp uit.</li>
+          <li>Verander alleen <code>afstand</code> naar <strong>20</strong> en voer opnieuw uit.</li>
+        </ol>
+        <p>Schrijf in één zin op wat er veranderde.</p>
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="5a"> Opdracht 5A voltooid</label>
+      </div>
+
+      <h3>Goede namen zijn deel van goede code</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Minder duidelijk</th><th>Beter</th><th>Waarom?</th></tr></thead>
+          <tbody>
+            <tr><td><code>a</code></td><td><code>afstand</code></td><td>Je ziet meteen wat het getal betekent.</td></tr>
+            <tr><td><code>x1</code></td><td><code>aantalVormen</code></td><td>De bedoeling staat in de naam.</td></tr>
+            <tr><td><code>ding</code></td><td><code>hoek</code></td><td>Minder raden, makkelijker aanpassen.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <details>
+        <summary>Bonus: wat betekent “change afstand by 2”?</summary>
+        <div>De huidige waarde wordt telkens 2 groter. Staat <code>afstand</code> eerst op 10, dan wordt ze 12, daarna 14, daarna 16 enzovoort. Zo kun je bijvoorbeeld een spiraal of steeds groter patroon maken.</div>
+      </details>
+    </section>
+
+    <section class="lesson" id="eindopdracht" aria-labelledby="eindopdracht-title">
+      <span class="lesson-number">Eindopdracht</span>
+      <h2 id="eindopdracht-title">Codekunst: ontwerp een 3D-patroon</h2>
+      <p class="lead">Maak een eigen ontwerp dat duidelijk door code is gegenereerd. Het mag een bloem, toren, spiraal, stad, sneeuwvlok, kroon, kunstwerk of iets volledig anders zijn.</p>
+
+      <div class="task">
+        <div class="task-head"><div class="task-icon">★</div><div><h3>Minimumvereisten</h3><p>Je ontwerp moet niet groot zijn, maar je code moet slim zijn.</p></div></div>
+        <ul class="checklist">
+          <li>Minstens <strong>2 verschillende Shapes</strong>.</li>
+          <li>Minstens <strong>1 Move</strong>.</li>
+          <li>Minstens <strong>1 Rotate of Scale</strong>.</li>
+          <li>Minstens <strong>1 Repeat</strong>-lus.</li>
+          <li>Minstens <strong>1 variabele</strong> met een duidelijke naam.</li>
+          <li>Minstens <strong>1 commentaar</strong> waarin je uitlegt wat een stuk code doet.</li>
+        </ul>
+
+        <h4>Werkwijze</h4>
+        <ol class="steps">
+          <li>Maak eerst een kleine versie die werkt.</li>
+          <li>Druk vaak op <strong>Play</strong> en controleer het resultaat.</li>
+          <li>Verander telkens één ding.</li>
+          <li>Geef variabelen en objecten duidelijke namen.</li>
+          <li>Pas pas op het einde kleuren, aantallen en details aan.</li>
+        </ol>
+
+        <h4>Mondelinge controle</h4>
+        <ol>
+          <li>Wijs je lus aan en leg uit wat er wordt herhaald.</li>
+          <li>Wijs je variabele aan en leg uit wat de waarde bepaalt.</li>
+          <li>Leg uit welke as je gebruikt bij minstens één <code>Move</code> of <code>Rotate</code>.</li>
+          <li>Verander live één parameter zodat het resultaat zichtbaar verandert.</li>
+        </ol>
+
+        <label class="done-row"><input class="progress-check" type="checkbox" data-id="eindopdracht"> Eindopdracht voltooid</label>
+      </div>
+
+      <div class="success">
+        <strong>Klaar</strong>
+        Je hebt nu dezelfde basisideeën gebruikt die ook in tekstuele programmeertalen voorkomen: instructies, parameters, coördinaten, lussen en variabelen.
+      </div>
+    </section>
+
+    <section class="lesson" id="spiekbrief" aria-labelledby="spiekbrief-title">
+      <span class="lesson-number">Naslag</span>
+      <h2 id="spiekbrief-title">Spiekbrief</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ik wil…</th><th>Gebruik</th></tr></thead>
+          <tbody>
+            <tr><td>een vorm maken</td><td><code>Shapes → Add ...</code></td></tr>
+            <tr><td>een vorm verplaatsen</td><td><code>Modify → Move</code></td></tr>
+            <tr><td>een vorm draaien</td><td><code>Modify → Rotate</code></td></tr>
+            <tr><td>een vorm groter of kleiner maken</td><td><code>Modify → Scale</code></td></tr>
+            <tr><td>meerdere vormen samen behandelen</td><td><code>Create New Object</code> / <code>Create Group</code></td></tr>
+            <tr><td>code meerdere keren uitvoeren</td><td><code>Control → Repeat ... times</code></td></tr>
+            <tr><td>een getal een naam geven</td><td><code>Create Variable</code></td></tr>
+            <tr><td>uitleg in mijn programma zetten</td><td><code>Mark Up</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Onthoud de assen</h3>
+      <div class="axis-box">
+        <div class="axis x"><b>X</b>links/rechts</div>
+        <div class="axis y"><b>Y</b>voor/achter</div>
+        <div class="axis z"><b>Z</b>hoogte</div>
+      </div>
+
+      <h3>Korte zelftest</h3>
+      <form class="quiz" id="quizForm">
+        <p><strong>1. Wat doet een <code>Repeat</code>-blok?</strong></p>
+        <label><input type="radio" name="q1" value="a"> Het maakt een vorm automatisch groter.</label>
+        <label><input type="radio" name="q1" value="b"> Het voert een groep instructies meerdere keren uit.</label>
+        <label><input type="radio" name="q1" value="c"> Het verwijdert dubbele vormen.</label>
+
+        <p><strong>2. Welke as gebruik je vooral voor hoogte?</strong></p>
+        <label><input type="radio" name="q2" value="a"> X</label>
+        <label><input type="radio" name="q2" value="b"> Y</label>
+        <label><input type="radio" name="q2" value="c"> Z</label>
+
+        <p><strong>3. Wat is een parameter?</strong></p>
+        <label><input type="radio" name="q3" value="a"> Een instelbare waarde van een blok.</label>
+        <label><input type="radio" name="q3" value="b"> Een foutmelding.</label>
+        <label><input type="radio" name="q3" value="c"> Een 3D-printerbestand.</label>
+
+        <p><strong>4. Waarom gebruik je een variabele?</strong></p>
+        <label><input type="radio" name="q4" value="a"> Om een waarde een naam te geven en makkelijk opnieuw te gebruiken.</label>
+        <label><input type="radio" name="q4" value="b"> Om altijd een sphere te maken.</label>
+        <label><input type="radio" name="q4" value="c"> Om de camera te draaien.</label>
+
+        <p><strong>5. Je wilt 8 vormen gelijkmatig rond één cirkel. Welke draaihoek past?</strong></p>
+        <label><input type="radio" name="q5" value="a"> 8°</label>
+        <label><input type="radio" name="q5" value="b"> 45°</label>
+        <label><input type="radio" name="q5" value="c"> 90°</label>
+
+        <button class="button" type="submit">Controleer antwoorden</button>
+        <div class="quiz-result" id="quizResult" role="status"></div>
+      </form>
+
+      <details class="teacher">
+        <summary>Docentfiche: snelle evaluatie</summary>
+        <div>
+          <p>Een leerling beheerst de basis wanneer die zonder voordoen een vorm kan maken en positioneren, een eenvoudige lus kan uitleggen en één parameter of variabele gericht kan wijzigen.</p>
+          <p>Bij de eindopdracht is de uitleg van de code belangrijker dan een ingewikkeld of mooi model.</p>
+        </div>
+      </details>
+    </section>
+
+    <p class="footer">Tinkercad Codeblocks · 1e middelbaar · voortgang wordt alleen in deze browser bewaard</p>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var checks = Array.from(document.querySelectorAll('.progress-check'));
+      var progressText = document.getElementById('progressText');
+      var progressBar = document.getElementById('progressBar');
+      var storageKey = 'cursus-tinkercad-codeblocks-1e-voortgang-v1';
+
+      function loadProgress() {
+        var saved = {};
+        try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch (error) { saved = {}; }
+        checks.forEach(function (check) { check.checked = Boolean(saved[check.dataset.id]); });
+        updateProgress();
+      }
+
+      function saveProgress() {
+        var saved = {};
+        checks.forEach(function (check) { saved[check.dataset.id] = check.checked; });
+        try { localStorage.setItem(storageKey, JSON.stringify(saved)); } catch (error) {}
+        updateProgress();
+      }
+
+      function updateProgress() {
+        var completed = checks.filter(function (check) { return check.checked; }).length;
+        var percentage = checks.length ? Math.round(completed / checks.length * 100) : 0;
+        progressText.textContent = completed + '/' + checks.length;
+        progressBar.style.width = percentage + '%';
+      }
+
+      checks.forEach(function (check) { check.addEventListener('change', saveProgress); });
+      loadProgress();
+
+      document.getElementById('quizForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var answers = { q1: 'b', q2: 'c', q3: 'a', q4: 'a', q5: 'b' };
+        var score = 0;
+        var completed = true;
+
+        Object.keys(answers).forEach(function (question) {
+          var selected = document.querySelector('input[name="' + question + '"]:checked');
+          if (!selected) completed = false;
+          if (selected && selected.value === answers[question]) score += 1;
+        });
+
+        var result = document.getElementById('quizResult');
+        if (!completed) {
+          result.textContent = 'Beantwoord eerst alle vijf vragen.';
+          result.style.color = 'var(--danger)';
+          return;
+        }
+
+        result.textContent = score + '/5 juist' + (score === 5 ? ' — klaar voor de eindopdracht.' : ' — bekijk de betrokken les nog eens.');
+        result.style.color = score === 5 ? 'var(--success)' : 'var(--warning)';
+      });
+    }());
+  </script>
+</body>
+</html>
