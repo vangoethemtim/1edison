@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>micro:bit 2 — verdieping en uitdagingen</title>
+<meta name="description" content="Tweede praktische micro:bit-cursus met moeilijkere MakeCode-oefeningen voor het eerste middelbaar.">
+<style>
+:root{--p:#1565c0;--pd:#0d47a1;--ps:#e8f1fb;--a:#ffb300;--ink:#17212b;--mut:#5f6b76;--line:#d9e0e7;--bg:#f4f7fa;--ok:#18794e;--oks:#e8f7ef;--warn:#9a5b00;--warns:#fff5dc;--bad:#b42318;--bads:#ffebe9;--shadow:0 4px 18px rgba(23,33,43,.09);--nav:280px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.58}a{color:var(--p)}button,input{font:inherit}code,kbd{font-family:Consolas,"Cascadia Code",monospace}code{padding:.08rem .32rem;border-radius:5px;color:#0b4d86;background:#edf3f8}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--nav);padding:24px 18px;overflow:auto;color:#fff;background:linear-gradient(175deg,#0d47a1,#12324f)}.brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}.brandmark{display:grid;width:46px;height:46px;place-items:center;border-radius:12px;background:#fff;color:var(--pd);font-weight:900}.brand small,.brand strong{display:block}.brand small{color:#cfe1f5}.sidebar nav a{display:block;padding:9px 11px;margin:3px 0;border-radius:8px;color:#e5f0fc;text-decoration:none;font-size:.94rem}.sidebar nav a:hover{background:rgba(255,255,255,.12)}.plabel{display:flex;justify-content:space-between;margin-top:22px;color:#d7e8f8;font-size:.82rem}.ptrack{height:7px;margin-top:6px;border-radius:20px;background:rgba(255,255,255,.18);overflow:hidden}.pbar{width:0;height:100%;background:var(--a);transition:.25s}
+main{width:min(1120px,calc(100% - var(--nav)));margin-left:var(--nav);padding:32px clamp(20px,4vw,62px) 80px}.hero{min-height:390px;display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,6vw,72px);margin-bottom:26px;border-radius:22px;color:#fff;background:radial-gradient(circle at 85% 15%,rgba(255,179,0,.95) 0 7%,transparent 7.3%),linear-gradient(135deg,#1565c0,#0d3d70 72%);box-shadow:var(--shadow)}.eyebrow{margin:0 0 10px;color:#dcecff;font-size:.82rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase}.hero h1{max-width:800px;margin:0;font-size:clamp(2.35rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.045em}.hero p:not(.eyebrow){max-width:760px;color:#e7f1fb;font-size:clamp(1.05rem,2vw,1.28rem)}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.btn{display:inline-flex;align-items:center;min-height:42px;padding:9px 15px;border:0;border-radius:8px;background:var(--p);color:#fff;font-weight:700;text-decoration:none;cursor:pointer}.btn.light{background:#fff;color:var(--pd)}.btn.ghost{border:1px solid rgba(255,255,255,.45);background:transparent}
+.lesson{margin:26px 0;padding:clamp(22px,4vw,42px);scroll-margin-top:20px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(23,33,43,.055)}.tag{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--ps);color:var(--pd);font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}h2{margin:10px 0 8px;font-size:clamp(1.65rem,3vw,2.3rem);line-height:1.15}h3{margin:28px 0 8px;font-size:1.25rem}h4{margin:20px 0 5px}p{margin:.55rem 0 1rem}.lead{max-width:860px;color:var(--mut);font-size:1.08rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.card{padding:16px;border:1px solid var(--line);border-radius:10px;background:#fbfcfd}.card strong{display:block;margin-bottom:3px}.card p{margin:0;color:var(--mut)}
+.note,.warning,.success,.danger{margin:18px 0;padding:14px 16px;border-left:5px solid var(--p);border-radius:8px;background:var(--ps)}.warning{border-color:var(--a);background:var(--warns)}.success{border-color:var(--ok);background:var(--oks)}.danger{border-color:var(--bad);background:var(--bads)}.note strong,.warning strong,.success strong,.danger strong{display:block}
+.table{overflow:auto;margin:18px 0}table{width:100%;border-collapse:collapse;font-size:.95rem}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f1f5f8;color:#334251}
+.steps{padding:0;margin:16px 0;counter-reset:s;list-style:none}.steps li{position:relative;min-height:42px;margin:10px 0;padding-left:50px;counter-increment:s}.steps li:before{position:absolute;left:0;top:-2px;display:grid;width:34px;height:34px;place-items:center;border-radius:50%;background:var(--p);color:#fff;font-weight:800;content:counter(s)}
+.task{margin:22px 0;padding:19px;border:2px solid #bad0e5;border-radius:12px;background:#f8fbfe}.thead{display:flex;gap:12px;align-items:flex-start}.tico{display:grid;flex:0 0 42px;width:42px;height:42px;place-items:center;border-radius:10px;background:var(--p);color:#fff;font-weight:900}.task h3{margin-top:2px}.done{display:flex;gap:9px;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--line);color:var(--ok);font-weight:700}.done input{width:19px;height:19px;accent-color:var(--ok)}
+.blocks{display:grid;gap:7px;max-width:720px;margin:18px auto;padding:18px;border:2px dashed #bdd0e0;border-radius:14px;background:#f9fbfd}.block{width:fit-content;max-width:100%;padding:10px 14px;border-radius:8px 8px 8px 3px;color:#fff;font-family:Consolas,monospace;font-weight:800;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12)}.basic{background:#1e88e5}.input{background:#7e57c2}.logic{background:#2e7d32}.var{background:#e68a00}.loop{background:#0097a7}.radio{background:#d81b60}.func{background:#6d4c41}.pin{background:#455a64}.ind{margin-left:28px}.ind2{margin-left:56px}
+.check{padding-left:0;list-style:none}.check li{margin:8px 0;padding-left:28px}.check li:before{float:left;margin-left:-28px;color:var(--ok);font-weight:900;content:"✓"}
+.xy{display:grid;grid-template-columns:repeat(5,38px);grid-template-rows:repeat(5,38px);gap:4px;justify-content:center;margin:20px auto}.cell{display:grid;place-items:center;border-radius:5px;background:#17212b;color:#fff;font-size:.75rem}.cell.hot{background:#d32f2f;font-weight:800}
+.formula{margin:18px 0;padding:15px;border-radius:10px;background:#f2f5f8;font-family:Consolas,monospace;font-weight:700;text-align:center}
+details{margin:14px 0;border:1px solid var(--line);border-radius:9px;background:#fff}summary{padding:13px 15px;color:var(--pd);font-weight:750;cursor:pointer}details>div{padding:0 15px 15px}.teacher{border-left:5px solid #7b1fa2}.teacher summary{color:#7b1fa2}
+.quiz label{display:block;margin:7px 0;padding:9px 11px;border:1px solid var(--line);border-radius:7px;cursor:pointer}.quiz input{margin-right:8px}.qresult{min-height:1.4em;margin-top:12px;font-weight:800}.footer{text-align:center;color:var(--mut);font-size:.88rem;padding-top:28px}
+@media(max-width:900px){.sidebar{position:static;width:100%;padding:15px 18px}.sidebar nav{display:flex;overflow:auto;gap:3px}.sidebar nav a{flex:0 0 auto;white-space:nowrap}.plabel,.ptrack{display:none}main{width:100%;margin:0;padding:18px 14px 60px}.hero{min-height:350px;border-radius:14px}}@media(max-width:600px){.grid{grid-template-columns:1fr}.lesson{padding:22px 17px}.block{font-size:.82rem}.xy{grid-template-columns:repeat(5,32px);grid-template-rows:repeat(5,32px)}}@media print{@page{size:A4;margin:15mm}.sidebar,.actions,.done,.quiz button,.footer{display:none!important}body{background:#fff;color:#000;font-size:10.5pt}main{width:100%;margin:0;padding:0}.hero{min-height:0;margin-bottom:10mm;padding:14mm;box-shadow:none}.lesson{margin:0 0 9mm;padding:0;border:0;box-shadow:none;break-before:page}.lesson:first-of-type{break-before:auto}.task,.note,.warning,.success,.danger,.blocks,table,details,.xy{break-inside:avoid}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand"><div class="brandmark">µB²</div><div><strong>micro:bit 2</strong><small>Verdieping</small></div></div>
+  <nav>
+    <a href="#start">Start</a>
+    <a href="#vooraf">Vooraf: wat is anders?</a>
+    <a href="#les1">1. Coördinaten & pixels</a>
+    <a href="#les2">2. Speler bewegen</a>
+    <a href="#les3">3. Functies & structuur</a>
+    <a href="#les4">4. Sensoren slim gebruiken</a>
+    <a href="#les5">5. Timing & reactiespel</a>
+    <a href="#les6">6. Radio met protocol</a>
+    <a href="#les7">7. Pinnen & analoog</a>
+    <a href="#eind">Eindproject</a>
+    <a href="#spiek">Spiekbrief</a>
+  </nav>
+  <div class="plabel"><span>Mijn uitdagingen</span><strong id="progressText">0/0</strong></div>
+  <div class="ptrack"><div class="pbar" id="progressBar"></div></div>
+</aside>
+
+<main id="inhoud">
+<header class="hero" id="start">
+  <p class="eyebrow">micro:bit 2 · verdieping</p>
+  <h1>Nu moet je programma echt nadenken.</h1>
+  <p>In de eerste cursus leerde je knoppen, variabelen, if/else, sensoren en radio gebruiken. Nu combineren we die bouwstenen tot programma's met toestand, grenzen, timing, functies en communicatieprotocollen.</p>
+  <div class="actions"><a class="btn light" href="#vooraf">Start cursus 2</a><a class="btn ghost" href="https://makecode.microbit.org/" target="_blank" rel="noopener">Open MakeCode</a><button class="btn ghost" onclick="window.print()">Afdrukken / pdf</button></div>
+</header>
+
+<section class="lesson" id="vooraf">
+  <span class="tag">Vooraf</span><h2>Van blokken gebruiken naar problemen oplossen</h2>
+  <p class="lead">Deze cursus geeft minder stap-voor-stapcode. Je krijgt vaker een probleem, regels en hints. Jij moet beslissen welke blokken je nodig hebt.</p>
+  <div class="grid">
+    <div class="card"><strong>Toestand</strong><p>Je programma moet waarden onthouden, bijvoorbeeld de positie van een speler of de toestand van een alarm.</p></div>
+    <div class="card"><strong>Grenzen</strong><p>Je voorkomt ongeldige waarden, zoals een pixel die buiten het 5×5-scherm beweegt.</p></div>
+    <div class="card"><strong>Structuur</strong><p>Je verdeelt een groter probleem in functies en kleinere deelproblemen.</p></div>
+    <div class="card"><strong>Testen</strong><p>Je test niet alleen of iets werkt, maar ook grensgevallen en foutscenario's.</p></div>
+  </div>
+  <div class="warning"><strong>Werkregel</strong>Verander telkens één onderdeel, test opnieuw en leg uit waarom het resultaat verandert. Een programma dat toevallig werkt is nog geen goed begrepen programma.</div>
+  <details class="teacher"><summary>Docentfiche: niveau en timing</summary><div>
+    <p>Deze cursus veronderstelt dat de leerling de basiscursus beheerst: gebeurtenissen, variabelen, if/else, random, sensoren en eenvoudige radio. Reken op ongeveer 7 lesuren plus een eindproject.</p>
+  </div></details>
+</section>
+
+<section class="lesson" id="les1">
+  <span class="tag">Les 1</span><h2>Coördinaten op de LED-matrix</h2>
+  <p class="lead">De 25 LED's zijn niet alleen een afbeelding. Elke LED heeft een positie met een X- en Y-coördinaat. Beide lopen van 0 tot en met 4.</p>
+  <div class="xy">
+    <div class="cell">0,0</div><div class="cell">1,0</div><div class="cell">2,0</div><div class="cell">3,0</div><div class="cell">4,0</div>
+    <div class="cell">0,1</div><div class="cell">1,1</div><div class="cell">2,1</div><div class="cell">3,1</div><div class="cell">4,1</div>
+    <div class="cell">0,2</div><div class="cell">1,2</div><div class="cell hot">2,2</div><div class="cell">3,2</div><div class="cell">4,2</div>
+    <div class="cell">0,3</div><div class="cell">1,3</div><div class="cell">2,3</div><div class="cell">3,3</div><div class="cell">4,3</div>
+    <div class="cell">0,4</div><div class="cell">1,4</div><div class="cell">2,4</div><div class="cell">3,4</div><div class="cell">4,4</div>
+  </div>
+  <div class="note"><strong>Middelpunt</strong>De middelste LED is <code>x=2, y=2</code>. Linksboven is <code>0,0</code>; rechtsonder is <code>4,4</code>.</div>
+
+  <div class="task"><div class="thead"><div class="tico">1A</div><div><h3>Zoek het doel</h3><p>Gebruik twee variabelen voor een positie.</p></div></div>
+    <ol class="steps">
+      <li>Maak variabelen <code>x</code> en <code>y</code>.</li>
+      <li>Zet beide bij start op een willekeurige waarde van 0 tot 4.</li>
+      <li>Gebruik <strong>plot x y</strong> om precies die LED aan te zetten.</li>
+      <li>Met A+B kies je een nieuwe willekeurige positie.</li>
+    </ol>
+    <label class="done"><input class="progress-check" data-id="1a" type="checkbox"> Opdracht 1A voltooid</label>
+  </div>
+
+  <div class="task"><div class="thead"><div class="tico">1B</div><div><h3>Teken een diagonaal met een lus</h3><p>Geen vijf losse plot-blokken.</p></div></div>
+    <p>Maak met een <code>for index from 0 to 4</code>-lus deze vijf punten: <code>(0,0)</code>, <code>(1,1)</code>, <code>(2,2)</code>, <code>(3,3)</code>, <code>(4,4)</code>.</p>
+    <div class="blocks"><div class="block loop">for index from 0 to 4</div><div class="block basic ind">plot x=index y=index</div></div>
+    <p><strong>Uitdaging:</strong> maak daarna de omgekeerde diagonaal zonder vijf losse blokken.</p>
+    <label class="done"><input class="progress-check" data-id="1b" type="checkbox"> Opdracht 1B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les2">
+  <span class="tag">Les 2</span><h2>Een speler die niet van het scherm mag vallen</h2>
+  <p class="lead">We bouwen een beweegbare pixel. Het moeilijke deel is niet bewegen, maar voorkomen dat de positie kleiner dan 0 of groter dan 4 wordt.</p>
+
+  <div class="task"><div class="thead"><div class="tico">2A</div><div><h3>Links en rechts</h3><p>Maak een speler op rij 2.</p></div></div>
+    <ul class="check">
+      <li><code>x</code> start op 2.</li>
+      <li>A beweegt één plaats naar links.</li>
+      <li>B beweegt één plaats naar rechts.</li>
+      <li>Na elke beweging wordt het oude scherm gewist en de nieuwe positie getekend.</li>
+      <li>De speler mag nooit buiten 0…4 komen.</li>
+    </ul>
+    <details><summary>Hint voor de grens</summary><div>Gebruik vóór het verlagen bijvoorbeeld <code>if x &gt; 0</code>. Voor naar rechts gebruik je <code>if x &lt; 4</code>.</div></details>
+    <label class="done"><input class="progress-check" data-id="2a" type="checkbox"> Opdracht 2A voltooid</label>
+  </div>
+
+  <div class="task"><div class="thead"><div class="tico">2B</div><div><h3>Volledige 2D-besturing</h3><p>Voeg ook omhoog en omlaag toe.</p></div></div>
+    <p>Gebruik nu <code>x</code> én <code>y</code>. Je mag zelf bepalen welke gebeurtenissen je gebruikt voor omhoog en omlaag, bijvoorbeeld schudden, kantelen of het logo aanraken.</p>
+    <div class="warning"><strong>Test de vier hoeken</strong>Een goede test is niet alleen het midden. Controleer expliciet <code>(0,0)</code>, <code>(4,0)</code>, <code>(0,4)</code> en <code>(4,4)</code>.</div>
+    <label class="done"><input class="progress-check" data-id="2b" type="checkbox"> Opdracht 2B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les3">
+  <span class="tag">Les 3</span><h2>Functies: grote programma's opdelen</h2>
+  <p class="lead">Als je dezelfde reeks blokken meermaals nodig hebt, maak je er een functie van. Dat maakt je programma korter en duidelijker.</p>
+  <div class="blocks">
+    <div class="block func">function tekenSpeler</div>
+    <div class="block basic ind">clear screen</div>
+    <div class="block basic ind">plot x y</div>
+  </div>
+  <div class="task"><div class="thead"><div class="tico">3A</div><div><h3>Refactor je speler</h3><p>Gebruik een eigen functie.</p></div></div>
+    <ol>
+      <li>Neem je programma uit les 2.</li>
+      <li>Maak een functie <code>tekenSpeler</code>.</li>
+      <li>Verplaats het wissen en opnieuw tekenen naar die functie.</li>
+      <li>Roep de functie na elke geldige beweging aan.</li>
+    </ol>
+    <label class="done"><input class="progress-check" data-id="3a" type="checkbox"> Opdracht 3A voltooid</label>
+  </div>
+
+  <div class="task"><div class="thead"><div class="tico">3B</div><div><h3>Toestanden: menu met modi</h3><p>Eén programma, meerdere gedragingen.</p></div></div>
+    <p>Maak een variabele <code>modus</code>. Knop A wisselt tussen drie modi:</p>
+    <div class="table"><table><thead><tr><th>modus</th><th>Gedrag</th></tr></thead><tbody>
+      <tr><td>0</td><td>toon temperatuur</td></tr>
+      <tr><td>1</td><td>toon lichtniveau</td></tr>
+      <tr><td>2</td><td>toon kompasrichting</td></tr>
+    </tbody></table></div>
+    <p>Na modus 2 moet de volgende druk opnieuw modus 0 geven.</p>
+    <details><summary>Hint</summary><div>Na <code>change modus by 1</code>: als <code>modus &gt; 2</code>, zet <code>modus</code> terug op 0.</div></details>
+    <label class="done"><input class="progress-check" data-id="3b" type="checkbox"> Opdracht 3B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les4">
+  <span class="tag">Les 4</span><h2>Sensorwaarden omzetten naar bruikbare informatie</h2>
+  <p class="lead">Een sensor geeft meestal een getal. Het interessante werk begint wanneer je dat getal interpreteert.</p>
+
+  <div class="task"><div class="thead"><div class="tico">4A</div><div><h3>Kantelindicator</h3><p>Gebruik acceleratie X.</p></div></div>
+    <p>Maak een programma met drie zones:</p>
+    <div class="table"><table><thead><tr><th>Waarde acceleratie X</th><th>Resultaat</th></tr></thead><tbody>
+      <tr><td>kleiner dan -300</td><td>pijl naar links</td></tr>
+      <tr><td>tussen -300 en 300</td><td>punt in het midden</td></tr>
+      <tr><td>groter dan 300</td><td>pijl naar rechts</td></tr>
+    </tbody></table></div>
+    <p>Gebruik een <code>if / else if / else</code>-structuur.</p>
+    <label class="done"><input class="progress-check" data-id="4a" type="checkbox"> Opdracht 4A voltooid</label>
+  </div>
+
+  <div class="task"><div class="thead"><div class="tico">4B</div><div><h3>Kalibreer je eigen drempel</h3><p>Niet elke omgeving is even licht.</p></div></div>
+    <ol>
+      <li>Knop A bewaart het huidige lichtniveau in <code>drempel</code>.</li>
+      <li>In <code>forever</code> vergelijk je het actuele lichtniveau met die drempel.</li>
+      <li>Onder de drempel: toon een maan.</li>
+      <li>Boven of gelijk aan de drempel: toon een zon.</li>
+    </ol>
+    <div class="success"><strong>Waarom dit beter is</strong>Je hardcodeert niet langer bijvoorbeeld 50. De gebruiker bepaalt zelf wat in zijn omgeving de grens tussen donker en licht is.</div>
+    <label class="done"><input class="progress-check" data-id="4b" type="checkbox"> Opdracht 4B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les5">
+  <span class="tag">Les 5</span><h2>Tijd meten: bouw een echt reactiespel</h2>
+  <p class="lead">Nu meten we niet alleen waarden, maar ook tijd. Daarvoor onthouden we twee tijdstippen en berekenen we het verschil.</p>
+  <div class="formula">reactietijd = eindtijd − starttijd</div>
+
+  <div class="task"><div class="thead"><div class="tico">5A</div><div><h3>Reactiemeter</h3><p>Meet in milliseconden.</p></div></div>
+    <ol class="steps">
+      <li>Wacht na het starten een willekeurige tijd tussen 2 en 5 seconden.</li>
+      <li>Toon plots een symbool.</li>
+      <li>Bewaar op dat moment <code>running time (ms)</code> in <code>starttijd</code>.</li>
+      <li>Wanneer A wordt ingedrukt, bereken je <code>running time - starttijd</code>.</li>
+      <li>Toon de reactietijd.</li>
+    </ol>
+    <label class="done"><input class="progress-check" data-id="5a" type="checkbox"> Opdracht 5A voltooid</label>
+  </div>
+
+  <div class="task"><div class="thead"><div class="tico">5B</div><div><h3>Vals starten detecteren</h3><p>Een speler mag niet te vroeg drukken.</p></div></div>
+    <p>Maak een booleaanse toestand met een variabele <code>magDrukken</code>. Voor het startsymbool is die <code>false</code>. Daarna wordt ze <code>true</code>.</p>
+    <div class="blocks">
+      <div class="block input">on button A pressed</div>
+      <div class="block logic ind">if magDrukken = true</div>
+      <div class="block var ind2">bereken reactietijd</div>
+      <div class="block logic ind">else</div>
+      <div class="block basic ind2">show icon X</div>
+    </div>
+    <label class="done"><input class="progress-check" data-id="5b" type="checkbox"> Opdracht 5B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les6">
+  <span class="tag">Les 6</span><h2>Radio met een eenvoudig protocol</h2>
+  <p class="lead">In cursus 1 stuurden we gewoon “HALLO”. Nu spreken we af wat getallen of berichten betekenen. Zo'n afspraak heet een protocol.</p>
+  <div class="table"><table><thead><tr><th>Waarde</th><th>Betekenis</th></tr></thead><tbody>
+    <tr><td>1</td><td>speler A drukt</td></tr>
+    <tr><td>2</td><td>speler B drukt</td></tr>
+    <tr><td>9</td><td>reset</td></tr>
+  </tbody></table></div>
+
+  <div class="task"><div class="thead"><div class="tico">6A</div><div><h3>Draadloze quizbuzzer</h3><p>Twee zenders, één ontvanger.</p></div></div>
+    <p>Micro:bit A stuurt <code>1</code> wanneer zijn knop wordt ingedrukt. Micro:bit B stuurt <code>2</code>. De ontvanger toont wie het eerst gedrukt heeft.</p>
+    <p>Na de eerste geldige druk moet de ontvanger verdere antwoorden negeren totdat de spelleider reset.</p>
+    <details><summary>Welke extra variabele heb je nodig?</summary><div>Bijvoorbeeld <code>antwoordBinnen</code>. Start op <code>false</code>; na het eerste antwoord wordt ze <code>true</code>.</div></details>
+    <label class="done"><input class="progress-check" data-id="6a" type="checkbox"> Opdracht 6A voltooid</label>
+  </div>
+
+  <div class="task"><div class="thead"><div class="tico">6B</div><div><h3>Bericht met waarde</h3><p>Stuur echte meetgegevens.</p></div></div>
+    <p>Laat één micro:bit elke 5 seconden zijn temperatuur via radio verzenden. De tweede micro:bit toont de ontvangen waarde wanneer knop A wordt ingedrukt.</p>
+    <div class="note"><strong>Waarom bewaren?</strong>De ontvanger moet de laatst ontvangen temperatuur in een variabele zetten. De knop toont dus niet “de radio”, maar de laatst bekende waarde.</div>
+    <label class="done"><input class="progress-check" data-id="6b" type="checkbox"> Opdracht 6B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les7">
+  <span class="tag">Les 7</span><h2>Pinnen, digitaal en analoog</h2>
+  <p class="lead">Tot nu toe gebruikten we ingebouwde onderdelen. Met de pinnen kun je ook de buitenwereld aansluiten.</p>
+  <div class="table"><table><thead><tr><th>Soort signaal</th><th>Typische waarden</th><th>Voorbeeld</th></tr></thead><tbody>
+    <tr><td>Digitaal</td><td>0 of 1</td><td>knop open/dicht, LED aan/uit</td></tr>
+    <tr><td>Analoog</td><td>een reeks waarden</td><td>potentiometer, lichtsensor, variabele spanning</td></tr>
+  </tbody></table></div>
+
+  <div class="task"><div class="thead"><div class="tico">7A</div><div><h3>Menselijke schakelaar</h3><p>Gebruik pin 0 als touch-invoer.</p></div></div>
+    <p>Maak een programma dat een hart toont wanneer pin 0 wordt aangeraakt. Wis het scherm wanneer pin 0 niet meer wordt aangeraakt.</p>
+    <label class="done"><input class="progress-check" data-id="7a" type="checkbox"> Opdracht 7A voltooid</label>
+  </div>
+
+  <div class="task"><div class="thead"><div class="tico">7B</div><div><h3>Optioneel: analoge meter</h3><p>Vereist een potentiometer of vergelijkbare analoge bron.</p></div></div>
+    <p>Lees pin 1 analoog uit. Zet de ruwe waarde om naar een niveau van 0 tot 4 en teken daarmee een verticale balk op de LED-matrix.</p>
+    <div class="formula">niveau = map(analoge waarde, 0…1023 → 0…4)</div>
+    <label class="done"><input class="progress-check" data-id="7b" type="checkbox"> Opdracht 7B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="eind">
+  <span class="tag">Eindproject</span><h2>Bouw een draadloos alarmsysteem</h2>
+  <p class="lead">Je combineert sensoren, toestand, functies, timing en radio. Werk per duo: één micro:bit is de sensor, de andere het controlepaneel.</p>
+
+  <div class="task"><div class="thead"><div class="tico">★</div><div><h3>Functionele eisen</h3><p>Je bepaalt zelf de exacte blokken.</p></div></div>
+    <ul class="check">
+      <li>Sensor-micro:bit detecteert beweging met de accelerometer.</li>
+      <li>Alarm reageert alleen wanneer het systeem <strong>ingeschakeld</strong> is.</li>
+      <li>Controle-micro:bit kan het systeem via radio in- en uitschakelen.</li>
+      <li>Bij beweging stuurt de sensor een alarmbericht naar het controlepaneel.</li>
+      <li>Controlepaneel toont duidelijk ALARM en maakt op V2 eventueel geluid.</li>
+      <li>Na een alarm blijft de toestand actief totdat de gebruiker reset.</li>
+      <li>Gebruik minstens één eigen functie.</li>
+      <li>Gebruik duidelijke variabelen zoals <code>ingeschakeld</code> en <code>alarmActief</code>.</li>
+    </ul>
+
+    <h3>Protocolvoorstel</h3>
+    <div class="table"><table><thead><tr><th>Radiowaarde</th><th>Betekenis</th></tr></thead><tbody>
+      <tr><td>1</td><td>alarm inschakelen</td></tr>
+      <tr><td>0</td><td>alarm uitschakelen</td></tr>
+      <tr><td>99</td><td>alarm gedetecteerd</td></tr>
+    </tbody></table></div>
+
+    <h3>Testplan</h3>
+    <ol class="steps">
+      <li>Bewegen terwijl het systeem uit staat: geen alarm.</li>
+      <li>Systeem inschakelen: bevestiging zichtbaar.</li>
+      <li>Bewegen terwijl het systeem aan staat: alarm.</li>
+      <li>Opnieuw bewegen tijdens actief alarm: systeem blijft stabiel.</li>
+      <li>Reset of uitschakelen: alarm verdwijnt.</li>
+    </ol>
+    <label class="done"><input class="progress-check" data-id="eind" type="checkbox"> Eindproject voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="spiek">
+  <span class="tag">Naslag</span><h2>Spiekbrief verdieping</h2>
+  <div class="table"><table><thead><tr><th>Probleem</th><th>Denk aan…</th></tr></thead><tbody>
+    <tr><td>positie onthouden</td><td>variabelen <code>x</code> en <code>y</code></td></tr>
+    <tr><td>buiten grens vermijden</td><td><code>if x &gt; 0</code>, <code>if x &lt; 4</code></td></tr>
+    <tr><td>dezelfde code hergebruiken</td><td>functie</td></tr>
+    <tr><td>verschillende modi</td><td>toestandsvariabele + if/else</td></tr>
+    <tr><td>grensgebieden</td><td><code>if / else if / else</code></td></tr>
+    <tr><td>tijd meten</td><td><code>running time</code> en verschil berekenen</td></tr>
+    <tr><td>vals starten voorkomen</td><td>boolean/toestandsvariabele</td></tr>
+    <tr><td>radio-afspraken</td><td>protocol met vaste waarden</td></tr>
+    <tr><td>digitale invoer</td><td>0/1 of waar/onwaar</td></tr>
+    <tr><td>analoge invoer</td><td>waarde meten en schalen</td></tr>
+  </tbody></table></div>
+
+  <h3>Korte zelftest</h3>
+  <form class="quiz" id="quizForm">
+    <p><strong>1. Welke coördinaat is de middelste LED?</strong></p>
+    <label><input type="radio" name="q1" value="a"> 0,0</label>
+    <label><input type="radio" name="q1" value="b"> 2,2</label>
+    <label><input type="radio" name="q1" value="c"> 5,5</label>
+
+    <p><strong>2. Waarom gebruik je een functie?</strong></p>
+    <label><input type="radio" name="q2" value="a"> Om herbruikbare code logisch te groeperen.</label>
+    <label><input type="radio" name="q2" value="b"> Alleen om tekst te tonen.</label>
+    <label><input type="radio" name="q2" value="c"> Om de batterij op te laden.</label>
+
+    <p><strong>3. Waarom test je bij een grens 9, 10 en 11 als de grens 10 is?</strong></p>
+    <label><input type="radio" name="q3" value="a"> Om onder, op en boven de grens te testen.</label>
+    <label><input type="radio" name="q3" value="b"> Omdat MakeCode anders niet start.</label>
+    <label><input type="radio" name="q3" value="c"> Omdat radio drie waarden nodig heeft.</label>
+
+    <p><strong>4. Wat is een radio-protocol?</strong></p>
+    <label><input type="radio" name="q4" value="a"> Een afspraak over de betekenis van verstuurde gegevens.</label>
+    <label><input type="radio" name="q4" value="b"> De USB-kabel.</label>
+    <label><input type="radio" name="q4" value="c"> Het volume van de speaker.</label>
+
+    <p><strong>5. Wat is het verschil tussen digitaal en analoog?</strong></p>
+    <label><input type="radio" name="q5" value="a"> Digitaal heeft typisch twee toestanden; analoog kan een reeks waarden hebben.</label>
+    <label><input type="radio" name="q5" value="b"> Er is geen verschil.</label>
+    <label><input type="radio" name="q5" value="c"> Analoog werkt alleen via radio.</label>
+
+    <button class="btn" type="submit">Controleer antwoorden</button>
+    <div id="quizResult" class="qresult"></div>
+  </form>
+</section>
+
+<p class="footer">micro:bit 2 · verdieping · voortgang wordt alleen in deze browser bewaard</p>
+</main>
+
+<script>
+(function(){
+ const checks=[...document.querySelectorAll('.progress-check')], key='cursus-microbit-2-verdieping-v1';
+ const text=document.getElementById('progressText'), bar=document.getElementById('progressBar');
+ function upd(){const n=checks.filter(c=>c.checked).length;text.textContent=n+'/'+checks.length;bar.style.width=(checks.length?Math.round(n/checks.length*100):0)+'%'}
+ function load(){let s={};try{s=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}checks.forEach(c=>c.checked=!!s[c.dataset.id]);upd()}
+ function save(){const s={};checks.forEach(c=>s[c.dataset.id]=c.checked);try{localStorage.setItem(key,JSON.stringify(s))}catch(e){}upd()}
+ checks.forEach(c=>c.addEventListener('change',save));load();
+ document.getElementById('quizForm').addEventListener('submit',function(e){
+   e.preventDefault(); const a={q1:'b',q2:'a',q3:'a',q4:'a',q5:'a'}; let score=0,complete=true;
+   Object.keys(a).forEach(q=>{const s=document.querySelector('input[name="'+q+'"]:checked');if(!s)complete=false;else if(s.value===a[q])score++});
+   const r=document.getElementById('quizResult');
+   if(!complete){r.textContent='Beantwoord eerst alle vijf vragen.';r.style.color='var(--bad)';return}
+   r.textContent=score+'/5 juist'+(score===5?' — klaar voor het eindproject.':' — herbekijk de betrokken les.');r.style.color=score===5?'var(--ok)':'var(--warn)';
+ });
+})();
+</script>
+</body>
+</html>

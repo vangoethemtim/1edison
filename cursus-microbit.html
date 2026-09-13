@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>micro:bit — praktische basiscursus</title>
+<meta name="description" content="Praktische basiscursus micro:bit en MakeCode voor het eerste middelbaar.">
+<style>
+:root{--p:#1565c0;--pd:#0d47a1;--ps:#e8f1fb;--a:#ffb300;--ink:#17212b;--mut:#5f6b76;--line:#d9e0e7;--bg:#f4f7fa;--ok:#18794e;--oks:#e8f7ef;--warn:#9a5b00;--warns:#fff5dc;--bad:#b42318;--bads:#ffebe9;--shadow:0 4px 18px rgba(23,33,43,.09);--nav:270px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.58}a{color:var(--p)}button,input{font:inherit}code,kbd{font-family:Consolas,"Cascadia Code",monospace}code{padding:.08rem .32rem;border-radius:5px;color:#0b4d86;background:#edf3f8}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--nav);padding:24px 18px;overflow:auto;color:#fff;background:linear-gradient(175deg,#0d47a1,#12324f)}.brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}.brandmark{display:grid;width:46px;height:46px;place-items:center;border-radius:12px;background:#fff;color:var(--pd);font-weight:900}.brand small,.brand strong{display:block}.brand small{color:#cfe1f5}.sidebar nav a{display:block;padding:9px 11px;margin:3px 0;border-radius:8px;color:#e5f0fc;text-decoration:none;font-size:.94rem}.sidebar nav a:hover{background:rgba(255,255,255,.12)}.plabel{display:flex;justify-content:space-between;margin-top:22px;color:#d7e8f8;font-size:.82rem}.ptrack{height:7px;margin-top:6px;border-radius:20px;background:rgba(255,255,255,.18);overflow:hidden}.pbar{width:0;height:100%;background:var(--a);transition:.25s}
+main{width:min(1100px,calc(100% - var(--nav)));margin-left:var(--nav);padding:32px clamp(20px,4vw,62px) 80px}.hero{min-height:390px;display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,6vw,72px);margin-bottom:26px;border-radius:22px;color:#fff;background:radial-gradient(circle at 85% 15%,rgba(255,179,0,.95) 0 7%,transparent 7.3%),linear-gradient(135deg,#1565c0,#0d3d70 72%);box-shadow:var(--shadow)}.eyebrow{margin:0 0 10px;color:#dcecff;font-size:.82rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase}.hero h1{max-width:760px;margin:0;font-size:clamp(2.4rem,6vw,4.8rem);line-height:1.02;letter-spacing:-.045em}.hero p:not(.eyebrow){max-width:720px;color:#e7f1fb;font-size:clamp(1.05rem,2vw,1.28rem)}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.btn{display:inline-flex;align-items:center;min-height:42px;padding:9px 15px;border:0;border-radius:8px;background:var(--p);color:#fff;font-weight:700;text-decoration:none;cursor:pointer}.btn.light{background:#fff;color:var(--pd)}.btn.ghost{border:1px solid rgba(255,255,255,.45);background:transparent}
+.lesson{margin:26px 0;padding:clamp(22px,4vw,42px);scroll-margin-top:20px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(23,33,43,.055)}.tag{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--ps);color:var(--pd);font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}h2{margin:10px 0 8px;font-size:clamp(1.65rem,3vw,2.3rem);line-height:1.15}h3{margin:28px 0 8px;font-size:1.25rem}p{margin:.55rem 0 1rem}.lead{max-width:820px;color:var(--mut);font-size:1.08rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.card{padding:16px;border:1px solid var(--line);border-radius:10px;background:#fbfcfd}.card strong{display:block;margin-bottom:3px}.card p{margin:0;color:var(--mut)}
+.note,.warning,.success,.danger{margin:18px 0;padding:14px 16px;border-left:5px solid var(--p);border-radius:8px;background:var(--ps)}.warning{border-color:var(--a);background:var(--warns)}.success{border-color:var(--ok);background:var(--oks)}.danger{border-color:var(--bad);background:var(--bads)}.note strong,.warning strong,.success strong,.danger strong{display:block}
+.table{overflow:auto;margin:18px 0}table{width:100%;border-collapse:collapse;font-size:.95rem}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f1f5f8;color:#334251}
+.steps{padding:0;margin:16px 0;counter-reset:s;list-style:none}.steps li{position:relative;min-height:42px;margin:10px 0;padding-left:50px;counter-increment:s}.steps li:before{position:absolute;left:0;top:-2px;display:grid;width:34px;height:34px;place-items:center;border-radius:50%;background:var(--p);color:#fff;font-weight:800;content:counter(s)}
+.task{margin:22px 0;padding:19px;border:2px solid #bad0e5;border-radius:12px;background:#f8fbfe}.thead{display:flex;gap:12px;align-items:flex-start}.tico{display:grid;flex:0 0 42px;width:42px;height:42px;place-items:center;border-radius:10px;background:var(--p);color:#fff;font-weight:900}.task h3{margin-top:2px}.done{display:flex;gap:9px;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--line);color:var(--ok);font-weight:700}.done input{width:19px;height:19px;accent-color:var(--ok)}
+.blocks{display:grid;gap:7px;max-width:680px;margin:18px auto;padding:18px;border:2px dashed #bdd0e0;border-radius:14px;background:#f9fbfd}.block{width:fit-content;max-width:100%;padding:10px 14px;border-radius:8px 8px 8px 3px;color:#fff;font-family:Consolas,monospace;font-weight:800;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12)}.basic{background:#1e88e5}.input{background:#7e57c2}.logic{background:#2e7d32}.var{background:#e68a00}.loop{background:#0097a7}.radio{background:#d81b60}.ind{margin-left:28px}
+.microbit{width:min(360px,92%);margin:22px auto;padding:24px;border-radius:30px;background:#222;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.18)}.matrix{display:grid;grid-template-columns:repeat(5,18px);gap:7px;justify-content:center;margin:10px auto 22px}.led{width:18px;height:18px;border-radius:50%;background:#e44;box-shadow:0 0 7px rgba(255,80,80,.55)}.mbbuttons{display:flex;justify-content:space-around;margin:10px 0 18px}.mbbtn{display:grid;width:48px;height:48px;place-items:center;border-radius:50%;background:#eee;color:#222;font-weight:900}.pins{display:flex;justify-content:space-around;color:#ffd54f;font-weight:800}
+.check{padding-left:0;list-style:none}.check li{margin:8px 0;padding-left:28px}.check li:before{float:left;margin-left:-28px;color:var(--ok);font-weight:900;content:"✓"}details{margin:14px 0;border:1px solid var(--line);border-radius:9px;background:#fff}summary{padding:13px 15px;color:var(--pd);font-weight:750;cursor:pointer}details>div{padding:0 15px 15px}.teacher{border-left:5px solid #7b1fa2}.teacher summary{color:#7b1fa2}.quiz label{display:block;margin:7px 0;padding:9px 11px;border:1px solid var(--line);border-radius:7px;cursor:pointer}.quiz input{margin-right:8px}.qresult{min-height:1.4em;margin-top:12px;font-weight:800}.footer{text-align:center;color:var(--mut);font-size:.88rem;padding-top:28px}
+@media(max-width:880px){.sidebar{position:static;width:100%;padding:15px 18px}.sidebar nav{display:flex;overflow:auto;gap:3px}.sidebar nav a{flex:0 0 auto;white-space:nowrap}.plabel,.ptrack{display:none}main{width:100%;margin:0;padding:18px 14px 60px}.hero{min-height:350px;border-radius:14px}}@media(max-width:600px){.grid{grid-template-columns:1fr}.lesson{padding:22px 17px}.block{font-size:.84rem}}@media print{@page{size:A4;margin:15mm}.sidebar,.actions,.done,.quiz button,.footer{display:none!important}body{background:#fff;color:#000;font-size:10.5pt}main{width:100%;margin:0;padding:0}.hero{min-height:0;margin-bottom:10mm;padding:14mm;box-shadow:none}.lesson{margin:0 0 9mm;padding:0;border:0;box-shadow:none;break-before:page}.lesson:first-of-type{break-before:auto}.task,.note,.warning,.success,.danger,.microbit,.blocks,table,details{break-inside:avoid}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand"><div class="brandmark">µB</div><div><strong>micro:bit</strong><small>1e middelbaar</small></div></div>
+  <nav>
+    <a href="#start">Start</a>
+    <a href="#vooraf">Vooraf: wat is micro:bit?</a>
+    <a href="#les1">1. Kennismaken</a>
+    <a href="#les2">2. Licht & knoppen</a>
+    <a href="#les3">3. Variabelen</a>
+    <a href="#les4">4. Beslissingen</a>
+    <a href="#les5">5. Sensoren</a>
+    <a href="#les6">6. Radio</a>
+    <a href="#eind">Eindopdracht</a>
+    <a href="#spiek">Spiekbrief</a>
+  </nav>
+  <div class="plabel"><span>Mijn oefeningen</span><strong id="progressText">0/0</strong></div>
+  <div class="ptrack"><div class="pbar" id="progressBar"></div></div>
+</aside>
+
+<main id="inhoud">
+<header class="hero" id="start">
+  <p class="eyebrow">Programmeren met echte hardware</p>
+  <h1>Laat je code iets doen.</h1>
+  <p>Met de micro:bit programmeer je lichtjes, knoppen, sensoren en draadloze berichten. We gebruiken MakeCode en testen telkens eerst in de simulator.</p>
+  <div class="actions"><a class="btn light" href="#vooraf">Start de cursus</a><a class="btn ghost" href="https://makecode.microbit.org/" target="_blank" rel="noopener">Open MakeCode</a><button class="btn ghost" onclick="window.print()">Afdrukken / pdf</button></div>
+</header>
+
+
+<section class="lesson" id="vooraf">
+  <span class="tag">Vooraf</span>
+  <h2>Wat is een micro:bit eigenlijk?</h2>
+  <p class="lead">De BBC micro:bit is een kleine programmeerbare computer die speciaal gemaakt is om te leren programmeren en experimenteren met elektronica. Je schrijft een programma op een computer of Chromebook, zet dat programma op de micro:bit en vanaf dan kan het bordje zelfstandig reageren op de wereld rondom zich.</p>
+
+  <div class="note">
+    <strong>Een echte computer, maar dan heel klein</strong>
+    Een micro:bit heeft net als een gewone computer een processor, geheugen, invoer en uitvoer. Alleen zijn het toetsenbord, scherm en de muis vervangen door knoppen, sensoren, LED's, aansluitpinnen en andere elektronische onderdelen.
+  </div>
+
+  <h3>Een klein stukje geschiedenis</h3>
+  <p>De naam <strong>BBC micro:bit</strong> komt van de Britse omroep BBC. De BBC had al veel eerder iets met computeronderwijs: in 1981 verscheen de <strong>BBC Micro</strong>, een computer die in veel Britse scholen werd gebruikt om leerlingen kennis te laten maken met programmeren.</p>
+
+  <p>Ruim dertig jaar later startte de BBC het project <strong>Make It Digital</strong>. In 2015 werd de micro:bit voorgesteld. In 2016 kregen ongeveer één miljoen Britse leerlingen van 11 à 12 jaar een micro:bit. Het idee was eenvoudig: jongeren moesten niet alleen apps en technologie <em>gebruiken</em>, maar ook leren hoe ze zelf digitale dingen konden <em>maken</em>.</p>
+
+  <p>In 2016 werd de onafhankelijke, non-profit <strong>Micro:bit Educational Foundation</strong> opgericht om het project wereldwijd verder te zetten. In 2020 verscheen de vernieuwde <strong>micro:bit V2</strong>, met onder andere een ingebouwde luidspreker, microfoon en aanraakgevoelig logo.</p>
+
+  <div class="table">
+    <table>
+      <thead><tr><th>Moment</th><th>Wat gebeurde er?</th></tr></thead>
+      <tbody>
+        <tr><td>1981</td><td>De BBC Micro brengt programmeren naar Britse scholen.</td></tr>
+        <tr><td>2015</td><td>De BBC stelt de micro:bit voor binnen het programma Make It Digital.</td></tr>
+        <tr><td>2016</td><td>Ongeveer één miljoen micro:bits worden verdeeld aan Britse leerlingen.</td></tr>
+        <tr><td>2016</td><td>De Micro:bit Educational Foundation neemt de verdere internationale ontwikkeling op zich.</td></tr>
+        <tr><td>2020</td><td>micro:bit V2 verschijnt met meer geheugen en extra functies voor geluid en aanraking.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Wat zit er op een micro:bit V2?</h3>
+  <div class="microbit" aria-label="Schematische micro:bit">
+    <div class="matrix">
+      <span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span>
+      <span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span>
+      <span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span>
+      <span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span>
+      <span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span>
+    </div>
+    <div class="mbbuttons"><div class="mbbtn">A</div><div class="mbbtn">B</div></div>
+    <div class="pins"><span>0</span><span>1</span><span>2</span><span>3V</span><span>GND</span></div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><strong>Processor</strong><p>Het brein van de micro:bit. De V2 gebruikt een 64 MHz ARM Cortex-M4F-processor.</p></div>
+    <div class="card"><strong>Geheugen</strong><p>De V2 heeft 512 kB flashgeheugen voor programma's en 128 kB RAM tijdens het uitvoeren.</p></div>
+    <div class="card"><strong>5 × 5 LED-matrix</strong><p>25 rode LED's kunnen afbeeldingen, cijfers, patronen en scrollende tekst tonen.</p></div>
+    <div class="card"><strong>Knoppen A en B</strong><p>Twee gewone drukknoppen. Je kunt A, B of A+B als gebeurtenis gebruiken.</p></div>
+    <div class="card"><strong>Aanraaklogo</strong><p>Op V2 is het gouden logo capacitief aanraakgevoelig en dus bruikbaar als extra invoer.</p></div>
+    <div class="card"><strong>Luidspreker</strong><p>V2 heeft een ingebouwde speaker voor tonen, melodieën en geluidseffecten.</p></div>
+  </div>
+
+  <h3>Sensoren: hoe voelt de micro:bit zijn omgeving?</h3>
+  <p>Een <strong>sensor</strong> zet iets uit de echte wereld om in een waarde die je programma kan gebruiken. Daardoor kan je code reageren op beweging, licht, temperatuur, geluid of richting.</p>
+
+  <div class="table">
+    <table>
+      <thead><tr><th>Sensor / invoer</th><th>Wat meet hij?</th><th>Wat kun je ermee maken?</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Accelerometer</strong></td>
+          <td>Versnelling en beweging over drie assen: X, Y en Z. Ook de zwaartekracht wordt gemeten.</td>
+          <td>Schuddetectie, stappenteller, bewegingsalarm, kantelen, spelbesturing.</td>
+        </tr>
+        <tr>
+          <td><strong>Kompas / magnetometer</strong></td>
+          <td>Magnetische velden en de richting van het magnetische noorden.</td>
+          <td>Digitaal kompas, richting bepalen, experimenten met magneten, deur- of raamalarm.</td>
+        </tr>
+        <tr>
+          <td><strong>Lichtsensor</strong></td>
+          <td>Hoeveel licht op de micro:bit valt. De LED-matrix wordt hiervoor ook als sensor gebruikt.</td>
+          <td>Nachtlampje, lichtalarm, metingen in een lokaal.</td>
+        </tr>
+        <tr>
+          <td><strong>Temperatuursensor</strong></td>
+          <td>Een benadering van de omgevingstemperatuur via de temperatuursensor in de processor.</td>
+          <td>Thermometer, temperatuurwaarschuwing, datalogging.</td>
+        </tr>
+        <tr>
+          <td><strong>Microfoon</strong> <em>(V2)</em></td>
+          <td>Geluidsniveau. In MakeCode kun je onder andere reageren op luid of stil geluid.</td>
+          <td>Klapschakelaar, geluidsmeter, lawaaialarm, geluidlogger.</td>
+        </tr>
+        <tr>
+          <td><strong>Aanraaklogo</strong> <em>(V2)</em></td>
+          <td>Capacitieve aanraking: je vinger verandert een klein elektrisch veld.</td>
+          <td>Extra knop, timer, spelbesturing, interactieve badge.</td>
+        </tr>
+        <tr>
+          <td><strong>Pinnen 0, 1 en 2</strong></td>
+          <td>Externe digitale of analoge signalen; de grote pinnen kunnen ook aanraking detecteren.</td>
+          <td>Knoppen, lichtsensoren, potentiometers, geleidende voorwerpen en eigen schakelingen.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warning">
+    <strong>Temperatuur: niet hetzelfde als een losse thermometer</strong>
+    De temperatuursensor zit in de processor. De waarde is daarom een benadering van de omgevingstemperatuur en kan beïnvloed worden door de warmte van de micro:bit zelf.
+  </div>
+
+  <h3>Invoer en uitvoer</h3>
+  <p>Bij bijna elk elektronisch systeem kun je nadenken in drie stappen:</p>
+
+  <div class="blocks">
+    <div class="block input">INPUT → knop, sensor, microfoon, pin</div>
+    <div class="block logic">PROCESSING → jouw programma neemt een beslissing</div>
+    <div class="block basic">OUTPUT → LED's, geluid, pin of radiobericht</div>
+  </div>
+
+  <div class="table">
+    <table>
+      <thead><tr><th>Invoer</th><th>Verwerking</th><th>Uitvoer</th></tr></thead>
+      <tbody>
+        <tr><td>Knoppen A/B</td><td rowspan="7">Jouw programma op de processor</td><td>5×5 LED-display</td></tr>
+        <tr><td>Accelerometer</td><td>Ingebouwde speaker (V2)</td></tr>
+        <tr><td>Kompas</td><td>Geluid via pin 0</td></tr>
+        <tr><td>Licht</td><td>Digitale/PWM-uitvoer via pinnen</td></tr>
+        <tr><td>Temperatuur</td><td>Radio</td></tr>
+        <tr><td>Microfoon / touch (V2)</td><td>Bluetooth</td></tr>
+        <tr><td>Externe onderdelen via pinnen</td><td>Externe LED's, motorcontrollers, robots enz.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>De aansluitpinnen: uitbreiden buiten het bordje</h3>
+  <p>Onderaan zit de <strong>edge connector</strong> met 25 elektrische aansluitingen. Vijf daarvan zijn groot genoeg om gemakkelijk met krokodillenklemmen te gebruiken: <code>0</code>, <code>1</code>, <code>2</code>, <code>3V</code> en <code>GND</code>.</p>
+
+  <div class="grid">
+    <div class="card"><strong>Pin 0, 1 en 2</strong><p>GPIO: ze kunnen als digitale in- of uitgang werken. Ze kunnen ook analoge waarden lezen en onder andere PWM en touch gebruiken.</p></div>
+    <div class="card"><strong>3V</strong><p>Een voedingspin waarmee eenvoudige externe elektronica van spanning kan worden voorzien.</p></div>
+    <div class="card"><strong>GND</strong><p>Ground of massa. Die maakt samen met de voeding het elektrische circuit compleet.</p></div>
+    <div class="card"><strong>20 kleinere contacten</strong><p>Met een edge-connector kun je nog veel meer signalen bereiken en uitgebreidere hardware aansluiten.</p></div>
+  </div>
+
+  <p>Daarmee kun je de micro:bit koppelen aan bijvoorbeeld externe LED's, een servo, motorcontroller, buzzer, vochtigheidssensor, afstandssensor, joystick of robot. Sommige onderdelen kunnen rechtstreeks aangesloten worden; andere hebben een extra driver- of uitbreidingsbord nodig.</p>
+
+  <h3>Communicatie: praten zonder draad</h3>
+  <div class="grid">
+    <div class="card"><strong>Radio</strong><p>micro:bits kunnen rechtstreeks kleine berichten naar elkaar sturen. Dat is ideaal voor klasprojecten, spelletjes en draadloze sensoren.</p></div>
+    <div class="card"><strong>Bluetooth</strong><p>De micro:bit kan via Bluetooth Low Energy communiceren met geschikte telefoons, tablets en andere apparaten.</p></div>
+  </div>
+
+  <div class="note">
+    <strong>Geen wifi</strong>
+    Een micro:bit heeft standaard geen wifi en maakt dus niet zelfstandig verbinding met je draadloze netwerk of het internet. Voor internetprojecten heb je extra hardware of een ander apparaat als tussenstation nodig.
+  </div>
+
+  <h3>Geluid</h3>
+  <p>Een micro:bit V2 kan geluid <strong>horen</strong> via de ingebouwde microfoon én geluid <strong>maken</strong> via de ingebouwde luidspreker. V1 heeft geen ingebouwde microfoon of luidspreker, maar kan wel geluid uitsturen naar bijvoorbeeld een hoofdtelefoon of externe speaker via een pin.</p>
+
+  <h3>Data logging: meten over een langere tijd</h3>
+  <p>De micro:bit V2 kan meetgegevens opslaan. Zo kun je bijvoorbeeld elke minuut het lichtniveau of de temperatuur bewaren en de gegevens later bekijken. Je maakt van de micro:bit dan een kleine <strong>data logger</strong>. Dat is nuttig voor STEM- en wetenschapsexperimenten.</p>
+
+  <div class="grid">
+    <div class="card"><strong>Voorbeeld 1</strong><p>Meet een schooldag lang hoe luid het in een lokaal is.</p></div>
+    <div class="card"><strong>Voorbeeld 2</strong><p>Registreer licht en temperatuur op verschillende plaatsen.</p></div>
+    <div class="card"><strong>Voorbeeld 3</strong><p>Meet beweging en bouw een eenvoudige stappenteller.</p></div>
+    <div class="card"><strong>Voorbeeld 4</strong><p>Verzamel waarden en verwerk ze later in een spreadsheet of grafiek.</p></div>
+  </div>
+
+  <h3>V1 en V2: niet elke micro:bit is hetzelfde</h3>
+  <div class="table">
+    <table>
+      <thead><tr><th>Functie</th><th>micro:bit V1</th><th>micro:bit V2</th></tr></thead>
+      <tbody>
+        <tr><td>5×5 LED-matrix</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Knoppen A/B</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Accelerometer</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Kompas</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Lichtmeting</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Temperatuurmeting</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Radio / Bluetooth</td><td>Ja</td><td>Ja</td></tr>
+        <tr><td>Ingebouwde microfoon</td><td>Nee</td><td>Ja</td></tr>
+        <tr><td>Ingebouwde luidspreker</td><td>Nee</td><td>Ja</td></tr>
+        <tr><td>Aanraakgevoelig logo</td><td>Nee</td><td>Ja</td></tr>
+        <tr><td>Meer geheugen en snellere processor</td><td>—</td><td>Ja</td></tr>
+        <tr><td>Data logging op het toestel</td><td>Nee</td><td>Ja</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Hoe programmeer je hem?</h3>
+  <p>De micro:bit is niet gebonden aan één programmeertaal. Voor deze cursus gebruiken we <strong>Microsoft MakeCode</strong>. Daar kun je met blokken beginnen en later dezelfde ideeën ook in tekstcode bekijken. Daarnaast bestaat er een officiële Python-editor voor micro:bit.</p>
+
+  <div class="grid">
+    <div class="card"><strong>MakeCode Blocks</strong><p>Visueel programmeren door blokken in elkaar te klikken. Ideaal om programmeerconcepten te leren.</p></div>
+    <div class="card"><strong>Tekstcode</strong><p>In MakeCode kun je ook naar JavaScript/TypeScript-achtige tekstcode overschakelen.</p></div>
+    <div class="card"><strong>Python</strong><p>Met de officiële Python-editor kun je later dezelfde hardware met Python programmeren.</p></div>
+    <div class="card"><strong>Simulator</strong><p>Veel programma's kun je eerst testen zonder een echte micro:bit aan te sluiten.</p></div>
+  </div>
+
+  <h3>Wat kan hij niet?</h3>
+  <p>De micro:bit is krachtig voor zijn formaat, maar het is geen smartphone of laptop. Hij heeft standaard geen wifi, GPS, camera of groot kleurenscherm. Hij kan geen zware apps of websites draaien. Juist die beperkingen maken hem interessant: je leert heel duidelijk hoe <strong>input → programma → output</strong> werkt.</p>
+
+  <h3>Wat kun je ermee bouwen?</h3>
+  <div class="grid">
+    <div class="card"><strong>Spellen</strong><p>Dobbelsteen, reactiespel, steen-papier-schaar, scorebord.</p></div>
+    <div class="card"><strong>Meetinstrumenten</strong><p>Thermometer, kompas, lichtmeter, geluidmeter, stappenteller.</p></div>
+    <div class="card"><strong>Alarmen</strong><p>Bewegingsalarm, lichtalarm, deurmelder of lawaaiwaarschuwing.</p></div>
+    <div class="card"><strong>Communicatie</strong><p>Draadloze berichten, quizknoppen of een eenvoudige afstandsbediening.</p></div>
+    <div class="card"><strong>Muziek</strong><p>Melodieën, metronoom, geluidseffecten of een eenvoudig instrument.</p></div>
+    <div class="card"><strong>Robots en elektronica</strong><p>Met uitbreidingen kun je motoren, servo's, sensoren en robots aansturen.</p></div>
+  </div>
+
+  <div class="success">
+    <strong>Het belangrijkste idee</strong>
+    De micro:bit vormt een brug tussen software en de echte wereld. Je programma blijft niet op een scherm staan: het kan licht, geluid, beweging, sensoren, elektronica en andere micro:bits gebruiken.
+  </div>
+</section>
+
+<section class="lesson">
+  <span class="tag">Overzicht</span><h2>Wat leer je?</h2>
+  <div class="grid">
+    <div class="card"><strong>Uitvoer</strong><p>Tekst, cijfers en symbolen tonen op de 5×5 LED-matrix.</p></div>
+    <div class="card"><strong>Invoer</strong><p>Reageren op knoppen, beweging en sensoren.</p></div>
+    <div class="card"><strong>Logica</strong><p>Variabelen, vergelijkingen en if/else gebruiken.</p></div>
+    <div class="card"><strong>Communicatie</strong><p>Twee micro:bits eenvoudige berichten laten uitwisselen.</p></div>
+  </div>
+  <div class="microbit">
+    <div class="matrix"><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span></div>
+    <div class="mbbuttons"><div class="mbbtn">A</div><div class="mbbtn">B</div></div>
+    <div class="pins"><span>0</span><span>1</span><span>2</span><span>3V</span><span>GND</span></div>
+  </div>
+  <details class="teacher"><summary>Docentfiche: voorgestelde timing</summary><div>
+    <div class="table"><table><thead><tr><th>Les</th><th>Inhoud</th><th>Resultaat</th></tr></thead><tbody>
+      <tr><td>1</td><td>Hardware, MakeCode en downloaden</td><td>Eerste programma op simulator en micro:bit.</td></tr>
+      <tr><td>2</td><td>LED-matrix, knoppen, shake</td><td>Interactief programma.</td></tr>
+      <tr><td>3</td><td>Variabelen</td><td>Scoreteller.</td></tr>
+      <tr><td>4</td><td>If/else</td><td>Programma dat keuzes maakt.</td></tr>
+      <tr><td>5</td><td>Licht, temperatuur, beweging</td><td>Sensorprogramma.</td></tr>
+      <tr><td>6</td><td>Radio + eindopdracht</td><td>Twee micro:bits communiceren.</td></tr>
+    </tbody></table></div>
+  </div></details>
+</section>
+
+<section class="lesson" id="les1">
+  <span class="tag">Les 1</span><h2>Kennismaken met micro:bit en MakeCode</h2>
+  <p class="lead">De micro:bit is een kleine programmeerbare computer. In MakeCode bouw je een programma met blokken en zie je links meteen het resultaat in de simulator.</p>
+  <h3>Belangrijkste onderdelen</h3>
+  <div class="table"><table><thead><tr><th>Onderdeel</th><th>Functie</th></tr></thead><tbody>
+    <tr><td>5×5 LED-matrix</td><td>Toont patronen, cijfers en tekst.</td></tr>
+    <tr><td>Knoppen A en B</td><td>Invoer van de gebruiker.</td></tr>
+    <tr><td>Versnellingssensor</td><td>Detecteert beweging en schudden.</td></tr>
+    <tr><td>Temperatuur en licht</td><td>Levert meetwaarden aan je programma.</td></tr>
+    <tr><td>Pinnen 0, 1, 2</td><td>Voor externe onderdelen en eenvoudige schakelingen.</td></tr>
+    <tr><td>3V en GND</td><td>Voeding en massa.</td></tr>
+  </tbody></table></div>
+  <h3>Nieuw project</h3>
+  <ol class="steps">
+    <li>Open <strong>makecode.microbit.org</strong>.</li>
+    <li>Kies <strong>New Project</strong>.</li>
+    <li>Noem het project <code>microbit_jouwnaam</code>.</li>
+    <li>Test eerst in de simulator.</li>
+  </ol>
+  <div class="task"><div class="thead"><div class="tico">1A</div><div><h3>Eerste programma</h3><p>Toon bij het starten een hartje.</p></div></div>
+    <div class="blocks"><div class="block basic">on start</div><div class="block basic ind">show icon ♥</div></div>
+    <p>Vervang daarna het hartje door een ander icoon.</p>
+    <label class="done"><input class="progress-check" data-id="1a" type="checkbox"> Opdracht 1A voltooid</label>
+  </div>
+  <div class="task"><div class="thead"><div class="tico">1B</div><div><h3>Naam tonen</h3><p>Laat je voornaam of initialen scrollen.</p></div></div>
+    <div class="blocks"><div class="block basic">on start</div><div class="block basic ind">show string "TIM"</div></div>
+    <label class="done"><input class="progress-check" data-id="1b" type="checkbox"> Opdracht 1B voltooid</label>
+  </div>
+  <div class="note"><strong>Naar de echte micro:bit</strong>Sluit de micro:bit via USB aan. Gebruik in MakeCode <strong>Download</strong>. Als koppelen met het toestel beschikbaar is, kies je <strong>Pair/Connect device</strong>; anders kun je het gedownloade <code>.hex</code>-bestand naar het MICROBIT-station kopiëren.</div>
+</section>
+
+<section class="lesson" id="les2">
+  <span class="tag">Les 2</span><h2>Licht, knoppen en gebeurtenissen</h2>
+  <p class="lead">Een gebeurtenis is iets waarop je programma reageert, bijvoorbeeld een druk op knop A.</p>
+  <div class="task"><div class="thead"><div class="tico">2A</div><div><h3>Drie reacties</h3><p>Gebruik A, B en A+B.</p></div></div>
+    <ul class="check"><li>A toont een blij gezicht.</li><li>B toont een verdrietig gezicht.</li><li>A+B wist het scherm.</li></ul>
+    <label class="done"><input class="progress-check" data-id="2a" type="checkbox"> Opdracht 2A voltooid</label>
+  </div>
+  <div class="task"><div class="thead"><div class="tico">2B</div><div><h3>Dobbelsteen</h3><p>Gebruik beweging als invoer.</p></div></div>
+    <div class="blocks"><div class="block input">on shake</div><div class="block basic ind">show number pick random 1 to 6</div></div>
+    <p>Schud de micro:bit. Er verschijnt telkens een willekeurig getal van 1 tot en met 6.</p>
+    <label class="done"><input class="progress-check" data-id="2b" type="checkbox"> Opdracht 2B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les3">
+  <span class="tag">Les 3</span><h2>Variabelen: een waarde onthouden</h2>
+  <p class="lead">Een variabele is een naam waarin je een waarde bewaart. We maken een variabele <code>score</code>.</p>
+  <div class="blocks"><div class="block var">set score to 0</div><div class="block input">on button A pressed</div><div class="block var ind">change score by 1</div><div class="block basic ind">show number score</div></div>
+  <div class="task"><div class="thead"><div class="tico">3A</div><div><h3>Scoreteller</h3><p>Bouw een teller met drie acties.</p></div></div>
+    <ul class="check"><li>Bij start: <code>score = 0</code>.</li><li>A: score +1.</li><li>B: score -1.</li><li>A+B: toon score.</li></ul>
+    <label class="done"><input class="progress-check" data-id="3a" type="checkbox"> Opdracht 3A voltooid</label>
+  </div>
+  <div class="warning"><strong>Set ≠ change</strong><code>set score to 1</code> maakt de waarde precies 1. <code>change score by 1</code> telt 1 op bij de bestaande waarde.</div>
+</section>
+
+<section class="lesson" id="les4">
+  <span class="tag">Les 4</span><h2>Beslissingen met if en else</h2>
+  <p class="lead">Met een voorwaarde kan de micro:bit verschillende dingen doen afhankelijk van een waarde.</p>
+  <div class="blocks"><div class="block input">on button A+B pressed</div><div class="block logic ind">if score ≥ 10 then</div><div class="block basic ind">show icon ✓</div><div class="block logic ind">else</div><div class="block basic ind">show icon ×</div></div>
+  <div class="table"><table><thead><tr><th>Vergelijking</th><th>Betekenis</th></tr></thead><tbody><tr><td><code>=</code></td><td>gelijk aan</td></tr><tr><td><code>&lt;</code></td><td>kleiner dan</td></tr><tr><td><code>&gt;</code></td><td>groter dan</td></tr><tr><td><code>≤</code></td><td>kleiner dan of gelijk aan</td></tr><tr><td><code>≥</code></td><td>groter dan of gelijk aan</td></tr></tbody></table></div>
+  <div class="task"><div class="thead"><div class="tico">4A</div><div><h3>Winconditie</h3><p>Breid je scoreteller uit.</p></div></div>
+    <ol><li>Als de score minstens 10 is: toon een vinkje.</li><li>Anders: toon een kruisje.</li><li>Test met score 9, 10 en 11.</li></ol>
+    <label class="done"><input class="progress-check" data-id="4a" type="checkbox"> Opdracht 4A voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les5">
+  <span class="tag">Les 5</span><h2>Sensoren: de micro:bit meet de wereld</h2>
+  <div class="table"><table><thead><tr><th>Sensor/invoer</th><th>Voorbeeld</th></tr></thead><tbody><tr><td>Temperatuur</td><td>Toon de gemeten temperatuur.</td></tr><tr><td>Lichtniveau</td><td>Maak een waarschuwing als het donker is.</td></tr><tr><td>Versnelling</td><td>Reageer op schudden of beweging.</td></tr><tr><td>Kompas</td><td>Meet een richting.</td></tr></tbody></table></div>
+  <div class="task"><div class="thead"><div class="tico">5A</div><div><h3>Thermometer</h3><p>Toon de temperatuur met knop A.</p></div></div>
+    <div class="blocks"><div class="block input">on button A pressed</div><div class="block basic ind">show number temperature (°C)</div></div>
+    <label class="done"><input class="progress-check" data-id="5a" type="checkbox"> Opdracht 5A voltooid</label>
+  </div>
+  <div class="task"><div class="thead"><div class="tico">5B</div><div><h3>Donkeralarm</h3><p>Gebruik licht als voorwaarde.</p></div></div>
+    <ul class="check"><li>Gebruik <code>forever</code>.</li><li>Als lichtniveau &lt; 50: toon een maan.</li><li>Anders: wis het scherm.</li></ul>
+    <label class="done"><input class="progress-check" data-id="5b" type="checkbox"> Opdracht 5B voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="les6">
+  <span class="tag">Les 6</span><h2>Radio: twee micro:bits laten samenwerken</h2>
+  <p class="lead">Twee micro:bits kunnen draadloos eenvoudige gegevens naar elkaar sturen.</p>
+  <div class="blocks"><div class="block basic">on start</div><div class="block radio ind">radio set group 7</div></div>
+  <div class="task"><div class="thead"><div class="tico">6A</div><div><h3>Draadloze groet</h3><p>Werk per duo.</p></div></div>
+    <h3>Zender</h3><div class="blocks"><div class="block input">on button A pressed</div><div class="block radio ind">radio send string "HALLO"</div></div>
+    <h3>Ontvanger</h3><div class="blocks"><div class="block radio">on radio received receivedString</div><div class="block basic ind">show string receivedString</div></div>
+    <label class="done"><input class="progress-check" data-id="6a" type="checkbox"> Opdracht 6A voltooid</label>
+  </div>
+  <div class="warning"><strong>Radiogroep</strong>Gebruik per duo een verschillend groepsnummer, anders ontvangen meerdere groepjes elkaars berichten.</div>
+</section>
+
+<section class="lesson" id="eind">
+  <span class="tag">Eindopdracht</span><h2>Bouw een slimme dobbelsteen</h2>
+  <p class="lead">Combineer beweging, toeval, een variabele en een beslissing.</p>
+  <div class="task"><div class="thead"><div class="tico">★</div><div><h3>Opdracht</h3><p>Maak een dobbelspel met een totaalscore.</p></div></div>
+    <ol class="steps">
+      <li>Maak de variabele <code>totaal</code> en zet die bij start op 0.</li>
+      <li>Bij schudden: kies een willekeurig getal van 1 tot en met 6.</li>
+      <li>Toon het gegooide getal.</li>
+      <li>Tel dat getal op bij <code>totaal</code>.</li>
+      <li>Knop B toont het totaal.</li>
+      <li>Knop A+B zet het totaal terug op 0.</li>
+      <li>Als het totaal 20 of meer is, toon je een trofee of blij gezicht.</li>
+    </ol>
+    <label class="done"><input class="progress-check" data-id="eind" type="checkbox"> Eindopdracht voltooid</label>
+  </div>
+</section>
+
+<section class="lesson" id="spiek">
+  <span class="tag">Naslag</span><h2>Spiekbrief</h2>
+  <div class="table"><table><thead><tr><th>Ik wil…</th><th>Gebruik</th></tr></thead><tbody>
+    <tr><td>iets doen bij start</td><td><code>on start</code></td></tr>
+    <tr><td>blijven herhalen</td><td><code>forever</code></td></tr>
+    <tr><td>reageren op knop</td><td><code>on button ... pressed</code></td></tr>
+    <tr><td>tekst/cijfer tonen</td><td><code>show string</code> / <code>show number</code></td></tr>
+    <tr><td>een waarde bewaren</td><td>Variable + <code>set</code></td></tr>
+    <tr><td>een waarde verhogen</td><td><code>change ... by</code></td></tr>
+    <tr><td>een keuze maken</td><td><code>if / else</code></td></tr>
+    <tr><td>willekeurig getal</td><td><code>pick random</code></td></tr>
+    <tr><td>sensor gebruiken</td><td><code>temperature</code>, <code>light level</code>, <code>acceleration</code></td></tr>
+    <tr><td>radio gebruiken</td><td><code>radio send ...</code> en <code>on radio received</code></td></tr>
+  </tbody></table></div>
+
+  <h3>Korte zelftest</h3>
+  <form class="quiz" id="quizForm">
+    <p><strong>1. Wat is een gebeurtenis?</strong></p>
+    <label><input type="radio" name="q1" value="a"> Een batterij.</label>
+    <label><input type="radio" name="q1" value="b"> Iets waarop het programma reageert, zoals een knopdruk.</label>
+    <label><input type="radio" name="q1" value="c"> Een foutmelding.</label>
+
+    <p><strong>2. Wat doet <code>change score by 1</code>?</strong></p>
+    <label><input type="radio" name="q2" value="a"> Zet score op 1.</label>
+    <label><input type="radio" name="q2" value="b"> Verhoogt de bestaande score met 1.</label>
+    <label><input type="radio" name="q2" value="c"> Verwijdert score.</label>
+
+    <p><strong>3. Waarvoor gebruik je <code>if</code>?</strong></p>
+    <label><input type="radio" name="q3" value="a"> Om een beslissing te maken.</label>
+    <label><input type="radio" name="q3" value="b"> Om altijd hetzelfde te tonen.</label>
+    <label><input type="radio" name="q3" value="c"> Om USB aan te sluiten.</label>
+
+    <p><strong>4. Wat doet <code>forever</code>?</strong></p>
+    <label><input type="radio" name="q4" value="a"> Eén keer uitvoeren.</label>
+    <label><input type="radio" name="q4" value="b"> Voortdurend herhalen.</label>
+    <label><input type="radio" name="q4" value="c"> Wachten op knop B.</label>
+
+    <p><strong>5. Wat moeten twee micro:bits delen om via radio te praten?</strong></p>
+    <label><input type="radio" name="q5" value="a"> Dezelfde radiogroep.</label>
+    <label><input type="radio" name="q5" value="b"> Dezelfde naam.</label>
+    <label><input type="radio" name="q5" value="c"> Dezelfde batterij.</label>
+
+    <button class="btn" type="submit">Controleer antwoorden</button>
+    <div id="quizResult" class="qresult"></div>
+  </form>
+</section>
+<p class="footer">micro:bit · 1e middelbaar · voortgang wordt alleen in deze browser bewaard</p>
+</main>
+
+<script>
+(function(){
+ const checks=[...document.querySelectorAll('.progress-check')], key='cursus-microbit-v1';
+ const text=document.getElementById('progressText'), bar=document.getElementById('progressBar');
+ function upd(){const n=checks.filter(c=>c.checked).length;text.textContent=n+'/'+checks.length;bar.style.width=(checks.length?Math.round(n/checks.length*100):0)+'%'}
+ function load(){let s={};try{s=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}checks.forEach(c=>c.checked=!!s[c.dataset.id]);upd()}
+ function save(){const s={};checks.forEach(c=>s[c.dataset.id]=c.checked);try{localStorage.setItem(key,JSON.stringify(s))}catch(e){}upd()}
+ checks.forEach(c=>c.addEventListener('change',save));load();
+ document.getElementById('quizForm').addEventListener('submit',function(e){
+   e.preventDefault(); const a={q1:'b',q2:'b',q3:'a',q4:'b',q5:'a'}; let score=0,complete=true;
+   Object.keys(a).forEach(q=>{const s=document.querySelector('input[name="'+q+'"]:checked');if(!s)complete=false;else if(s.value===a[q])score++});
+   const r=document.getElementById('quizResult'); if(!complete){r.textContent='Beantwoord eerst alle vijf vragen.';r.style.color='var(--bad)';return}
+   r.textContent=score+'/5 juist'+(score===5?' — klaar voor de eindopdracht.':' — bekijk de betrokken les nog eens.');r.style.color=score===5?'var(--ok)':'var(--warn)';
+ });
+})();
+</script>
+</body>
+</html>
